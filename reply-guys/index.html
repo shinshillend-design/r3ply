@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reply Guy Application — R3PLY</title>
+  <meta name="description" content="Apply to join the R3PLY reply team. Bring your Crypto Twitter knowledge, reply examples and X analytics to help Web3 founders show up in the right conversations.">
+  <link rel="canonical" href="https://r3ply.xyz/reply-guys/">
+  <meta property="og:title" content="Join the reply team — R3PLY">
+  <meta property="og:description" content="Know Crypto Twitter? Apply to join the R3PLY reply team.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://r3ply.xyz/reply-guys/">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#050507">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://tally.so">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500&family=Figtree:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050507;
+      --bg-card: #0b0b15;
+      --border: #181824;
+      --text: #f2f3f8;
+      --text-dim: #c2c6d4;
+      --muted: #828aa0;
+      --accent: #4f9eff;
+      --accent-300: #93c2ff;
+      --accent-rgb: 79 158 255;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Figtree', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    ::selection { background: var(--accent); color: var(--bg); }
+    a:focus-visible, button:focus-visible, iframe:focus-visible { outline: 3px solid var(--accent-300); outline-offset: 5px; }
+    .skip-link { position: fixed; top: 12px; left: 16px; z-index: 20; padding: 12px 18px; background: var(--accent); color: var(--bg); font-weight: 700; border-radius: 8px; transform: translateY(-160%); }
+    .skip-link:focus { transform: translateY(0); }
+    .wrap { width: min(1160px, calc(100% - 80px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--border); background: rgba(5,5,7,.94); backdrop-filter: blur(18px); }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { font-weight: 800; font-size: 21px; letter-spacing: -.04em; text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-link { color: var(--text-dim); font-size: 13px; text-decoration: none; transition: color .2s; }
+    .nav-link:hover, .text-link:hover { color: var(--accent-300); }
+    .arrow { margin-left: 8px; }
+    .hero { position: relative; isolation: isolate; overflow: hidden; border-bottom: 1px solid var(--border); }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+    .hero::before { content: ''; position: absolute; z-index: -1; top: -260px; right: -180px; width: 850px; height: 750px; background: radial-gradient(ellipse, rgba(79,158,255,.09), transparent 68%); pointer-events: none; }
+    .hero-inner { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: center; padding-block: 78px 84px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--accent-300); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: .14em; line-height: 1.6; text-transform: uppercase; }
+    .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 14px rgba(79,158,255,.5); flex: 0 0 auto; }
+    h1 { font-size: clamp(54px, 6.5vw, 82px); font-weight: 800; letter-spacing: -.05em; line-height: 1.02; margin: 23px 0 0; }
+    h1 em, h2 em { font-family: 'EB Garamond', serif; font-weight: 400; color: var(--accent-300); letter-spacing: -.035em; }
+    .hero-copy { max-width: 425px; padding-top: 38px; }
+    .hero-copy p { font-size: 19px; color: var(--text-dim); line-height: 1.65; margin: 0 0 26px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; padding: 16px 23px; min-height: 52px; border: 1px solid var(--accent); border-radius: 9px; background: var(--accent); color: #050507; font-size: 14px; font-weight: 700; text-decoration: none; transition: background .2s, box-shadow .2s; }
+    .button:hover { background: var(--accent-300); border-color: var(--accent-300); box-shadow: 0 0 28px rgba(79,158,255,.15); }
+    .hero-note { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; color: var(--muted); font-size: 12px; }
+    .hero-note span + span::before { content: '·'; margin-right: 9px; }
+    .application { padding-block: 70px 90px; }
+    .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: .14em; color: var(--muted); margin: 0 0 30px; }
+    .application-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); align-items: start; gap: 60px; }
+    .application-info { padding-top: 4px; }
+    h2 { font-size: 40px; font-weight: 700; letter-spacing: -.04em; line-height: 1.13; margin: 0 0 18px; }
+    .intro { color: var(--text-dim); font-size: 15px; line-height: 1.75; margin: 0 0 30px; }
+    .checklist { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .checklist h3 { font-size: 13px; font-weight: 600; margin: 0 0 19px; }
+    .checklist ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; }
+    .checklist li { position: relative; padding-left: 23px; color: var(--text-dim); font-size: 13px; line-height: 1.6; }
+    .checklist li::before { content: '↗'; position: absolute; top: 0; left: 0; color: var(--accent); }
+    .checklist strong { display: block; color: var(--text); font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .form-card { min-width: 0; overflow: hidden; border: 1px solid rgba(79,158,255,.22); border-radius: 16px; background: #fff; box-shadow: 0 16px 70px rgba(0,0,0,.2); }
+    .form-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 23px 26px; }
+    .form-header h3 { margin: 0; color: var(--text); font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+    .form-header a { color: var(--accent-300); font-size: 12px; text-decoration: none; }
+    .form-header a:hover { text-decoration: underline; }
+    .tally-form { display: block; width: 100%; border: 0; color-scheme: light; }
+    .fallback { border-top: 1px solid #e5e7eb; padding: 20px 26px; background: #f8f9fb; color: #505968; font-size: 12px; line-height: 1.6; }
+    .fallback a { color: #23599c; font-weight: 600; }
+    .client-note { border-top: 1px solid var(--border); margin-top: 30px; padding-top: 24px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .text-link { display: inline-block; margin-top: 8px; color: var(--text-dim); text-decoration: none; }
+    .site-footer { border-top: 1px solid var(--border); }
+    .footer-inner { padding-block: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; color: var(--muted); font-size: 12px; }
+    .footer-links a { text-decoration: none; }
+    .footer-links a:hover { color: var(--accent-300); }
+    @media (max-width: 960px) {
+      .wrap { width: calc(100% - 48px); }
+      .hero-inner { gap: 40px; }
+      .application-grid { grid-template-columns: 260px minmax(0, 1fr); gap: 30px; }
+      h2 { font-size: 35px; }
+    }
+    @media (max-width: 760px) {
+      .wrap { width: calc(100% - 40px); }
+      .nav { min-height: 66px; gap: 16px; }
+      .nav-link { max-width: 185px; text-align: right; font-size: 12px; line-height: 1.5; }
+      .hero-inner { grid-template-columns: 1fr; gap: 24px; padding-block: 54px; }
+      h1 { font-size: clamp(53px, 11vw, 76px); }
+      .hero-copy { padding-top: 0; max-width: 500px; }
+      .hero-copy p { font-size: 17px; margin-bottom: 22px; }
+      .application { padding-block: 46px 54px; }
+      .application-grid { grid-template-columns: 1fr; gap: 32px; }
+      h2 { font-size: 38px; }
+      .intro { margin-bottom: 22px; }
+      .checklist { padding: 22px; }
+      .checklist ul { grid-template-columns: 1fr 1fr; gap: 18px; }
+      .client-note { margin-top: 22px; }
+      .form-header { padding: 20px; }
+      .fallback { padding: 18px 20px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-links { gap: 18px; }
+    }
+    @media (max-width: 420px) {
+      .checklist ul { grid-template-columns: 1fr; }
+      .button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#apply">Skip to application</a>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="logo" href="/" aria-label="R3PLY homepage">R<span>3</span>PLY</a>
+      <a class="nav-link" href="/">Need replies for your brand?<span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-inner wrap">
+        <div>
+          <div class="eyebrow">For CT-native reply guys</div>
+          <h1 id="hero-title">Join the<br><em>reply team.</em></h1>
+        </div>
+        <div class="hero-copy">
+          <p>Know Crypto Twitter? Help Web3 founders show up in the right conversations with replies that sound like them.</p>
+          <a class="button" href="#apply">Apply to join R3PLY <span aria-hidden="true">↓</span></a>
+          <div class="hero-note"><span>Human-written</span><span>On-brand</span><span>Built for X</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="application wrap" id="apply" aria-labelledby="application-title">
+      <p class="section-label">01 / REPLY GUY APPLICATION</p>
+      <div class="application-grid">
+        <aside class="application-info">
+          <h2 id="application-title">Bring your<br><em>best replies.</em></h2>
+          <p class="intro">Show us how you read the room, match a founder’s voice, and add something worth reading to the conversation.</p>
+          <div class="checklist">
+            <h3>Have these ready</h3>
+            <ul>
+              <li><strong>Your handles</strong>X and Telegram, so we can find you.</li>
+              <li><strong>X analytics</strong>Last 3 months, including reply activity. Image up to 10 MB.</li>
+              <li><strong>Your best work</strong>Case studies or links to 3–5 reply examples.</li>
+              <li><strong>Your availability</strong>Daily hours, timezone, and your expected monthly rate.</li>
+            </ul>
+          </div>
+          <div class="client-note">Looking for replies for your own account?<br><a class="text-link" href="/">Explore R3PLY’s service <span aria-hidden="true">↗</span></a></div>
+        </aside>
+        <div class="form-card">
+          <div class="form-header">
+            <h3>Reply Guy Application</h3>
+            <a href="https://tally.so/r/2E71Xb" target="_blank" rel="noopener noreferrer">Open in Tally <span aria-hidden="true">↗</span><span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;"> (opens in a new tab)</span></a>
+          </div>
+          <iframe class="tally-form" data-tally-src="https://tally.so/embed/2E71Xb?alignLeft=1&amp;hideTitle=1&amp;dynamicHeight=1" src="https://tally.so/embed/2E71Xb?alignLeft=1&amp;hideTitle=1&amp;dynamicHeight=1" loading="lazy" width="100%" height="1720" title="R3PLY reply guy application form"></iframe>
+          <div class="fallback">Having trouble with the form? <a href="https://tally.so/r/2E71Xb" target="_blank" rel="noopener noreferrer">Open the application directly in Tally ↗</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner wrap">
+      <a class="logo" href="/" aria-label="R3PLY homepage">R<span>3</span>PLY</a>
+      <div class="footer-links">
+        <a href="/">Back to R3PLY <span aria-hidden="true">↗</span></a>
+        <a href="https://x.com/shynxbt" target="_blank" rel="noopener noreferrer">X / Twitter</a>
+        <span>© 2026 R3PLY. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="https://tally.so/widgets/embed.js" onload="if (window.Tally) window.Tally.loadEmbeds();" async></script>
+  <script>
+    /* HERO CANVAS - blue cursor trails and dot-field click ripples */
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      const hero = canvas && canvas.closest('.hero');
+      const ctx = canvas && canvas.getContext('2d');
+      if (!hero || !ctx) return;
+
+      const motion = matchMedia('(prefers-reduced-motion: reduce)');
+      const pointer = matchMedia('(hover: hover) and (pointer: fine)');
+      const rgb = getComputedStyle(hero).getPropertyValue('--accent-rgb').trim().split(/[\s,]+/).map(Number);
+      const blue = rgb.length === 3 && rgb.every(Number.isFinite) ? rgb : [79, 158, 255];
+      const TRAIL_LIFE = 680, RIPPLE_LIFE = 1700, MAX_TRAIL = 24;
+      let width = 1, height = 1, radius = 100, dots = [], masks = [];
+      let trail = [], ripples = [], frame = null, inView = true, lastPaint = 0;
+      let phase = 0, previousTime = 0, previousPoint = null;
+      const animated = () => !motion.matches && pointer.matches;
+      const canRun = () => animated() && inView && !document.hidden;
+
+      function measure() {
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        radius = Math.max(80, Math.min(120, width * 0.075));
+        masks = [...hero.querySelectorAll('.hero-call-note, .hero-trust')].map(el => {
+          const r = el.getBoundingClientRect();
+          return { left: r.left - rect.left - 10, top: r.top - rect.top - 10,
+            right: r.right - rect.left + 10, bottom: r.bottom - rect.top + 10 };
+        });
+        const spacing = width < 600 ? 22 : 16;
+        dots = [];
+        for (let y = spacing / 2; y < height; y += spacing) {
+          for (let x = spacing / 2; x < width; x += spacing) {
+            if (masks.some(m => x >= m.left && x <= m.right && y >= m.top && y <= m.bottom)) continue;
+            const edge = Math.min(1, Math.min(x, width - x) / 90);
+            dots.push({ x, y, edge, distance: Math.hypot(x - width * 0.5, y - height * 0.35) });
+          }
+        }
+        trail = [];
+        ripples = [];
+        previousPoint = null;
+        paint(performance.now(), false);
+        sync();
+      }
+
+      function paint(now, moving) {
+        if (moving) phase += Math.min(50, now - (previousTime || now)) / 1000;
+        previousTime = now;
+        trail = trail.filter(p => now - p.time < TRAIL_LIFE);
+        ripples = ripples.filter(p => now - p.time < RIPPLE_LIFE);
+        const strokes = trail.map(p => ({ ...p, fade: Math.pow(1 - (now - p.time) / TRAIL_LIFE, 1.5),
+          dx: p.x - p.fromX, dy: p.y - p.fromY,
+          length: Math.pow(p.x - p.fromX, 2) + Math.pow(p.y - p.fromY, 2) }));
+        const waves = ripples.map(p => ({ ...p, radius: (now - p.time) * 0.62,
+          fade: Math.pow(1 - (now - p.time) / RIPPLE_LIFE, 2) }));
+        ctx.clearRect(0, 0, width, height);
+        for (const dot of dots) {
+          let wake = 0, ripple = 0;
+          if (moving) {
+            for (const p of strokes) {
+              if (Math.abs(dot.x - p.x) > radius + Math.abs(p.dx) || Math.abs(dot.y - p.y) > radius + Math.abs(p.dy)) continue;
+              const t = p.length ? Math.max(0, Math.min(1, ((dot.x - p.fromX) * p.dx + (dot.y - p.fromY) * p.dy) / p.length)) : 0;
+              const distance = Math.hypot(dot.x - p.fromX - p.dx * t, dot.y - p.fromY - p.dy * t);
+              if (distance < radius) wake = Math.max(wake, Math.pow(1 - distance / radius, 2) * p.fade);
+            }
+            for (const p of waves) {
+              const distance = Math.abs(Math.hypot(dot.x - p.x, dot.y - p.y) - p.radius);
+              const thickness = 24 + p.radius * 0.045;
+              if (distance < thickness) ripple = Math.max(ripple, (1 - distance / thickness) * p.fade);
+            }
+          }
+          const light = Math.min(1, Math.max(wake, ripple));
+          const breath = moving ? (Math.sin(phase * 1.25 - dot.distance * 0.012) + 1) * 0.016 : 0.013;
+          const alpha = (0.034 + breath + light * 0.66) * dot.edge;
+          const blend = Math.min(1, light * 1.7);
+          const color = blue.map((channel, i) => Math.round([242, 243, 248][i] * (1 - blend) + channel * blend));
+          ctx.fillStyle = `rgba(${color.join(',')},${alpha})`;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, 0.85 + light * 1.15, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function tick(now) {
+        frame = null;
+        if (!canRun()) return;
+        // Limit the background to 40 fps; page controls keep their normal frame rate.
+        if (now - lastPaint >= 25) { paint(now, true); lastPaint = now; }
+        frame = requestAnimationFrame(tick);
+      }
+      function stop() {
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+        previousTime = 0;
+      }
+      function sync() {
+        if (canRun()) {
+          if (frame === null) frame = requestAnimationFrame(tick);
+        } else {
+          stop();
+          if (!animated()) {
+            trail = []; ripples = []; previousPoint = null;
+            paint(performance.now(), false);
+          }
+        }
+      }
+      function localPoint(e) {
+        const rect = canvas.getBoundingClientRect();
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+      hero.addEventListener('pointermove', e => {
+        if (!canRun() || e.pointerType === 'touch') return;
+        const now = performance.now();
+        if (previousPoint && now - previousPoint.time < 12) return;
+        const p = localPoint(e);
+        if (p.x < 0 || p.y < 0 || p.x > width || p.y > height) return;
+        const nearby = previousPoint && now - previousPoint.time < 100 &&
+          Math.hypot(p.x - previousPoint.x, p.y - previousPoint.y) < radius * 2;
+        trail.push({ ...p, fromX: nearby ? previousPoint.x : p.x,
+          fromY: nearby ? previousPoint.y : p.y, time: now });
+        if (trail.length > MAX_TRAIL) trail.shift();
+        previousPoint = { ...p, time: now };
+      }, { passive: true });
+      hero.addEventListener('pointerleave', () => { previousPoint = null; });
+      hero.addEventListener('click', e => {
+        if (!canRun() || e.target.closest('a, button, input, select, textarea, summary')) return;
+        ripples.push({ ...localPoint(e), time: performance.now() });
+        if (ripples.length > 4) ripples.shift();
+      });
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          inView = entries.some(entry => entry.isIntersecting);
+          if (!inView) { trail = []; ripples = []; previousPoint = null; }
+          sync();
+        }, { threshold: 0 }).observe(hero);
+      }
+      if ('ResizeObserver' in window) new ResizeObserver(measure).observe(hero);
+      else window.addEventListener('resize', measure, { passive: true });
+      document.addEventListener('visibilitychange', sync);
+      motion.addEventListener('change', sync);
+      pointer.addEventListener('change', sync);
+      window.addEventListener('pageshow', measure);
+      if (document.fonts) document.fonts.ready.then(measure);
+      measure();
+    })();
+  </script>
+</body>
+</html>
