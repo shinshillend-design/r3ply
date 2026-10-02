@@ -1433,13 +1433,28 @@
         ripples.push({ x: e.touches[0].clientX - r.left, y: e.touches[0].clientY - r.top, r: 0, a: 0.5 });
       }, { passive: true });
 
+      function textMask() {
+        const cr = canvas.getBoundingClientRect();
+        const els = canvas.parentElement.querySelectorAll('.hero-call-note, .hero-trust');
+        if (!els.length) return null;
+        const rects = [...els].map(el => el.getBoundingClientRect());
+        const pad = 8;
+        return {
+          l: Math.min(...rects.map(r => r.left)) - cr.left - pad,
+          t: Math.min(...rects.map(r => r.top)) - cr.top - pad,
+          ri: Math.max(...rects.map(r => r.right)) - cr.left + pad,
+          b: Math.max(...rects.map(r => r.bottom)) - cr.top + pad
+        };
+      }
       function draw() {
         const w = canvas.offsetWidth, h = canvas.offsetHeight;
         ctx.clearRect(0, 0, w, h);
+        const mask = textMask();
         const cols = Math.ceil(w / SPACING) + 1, rows = Math.ceil(h / SPACING) + 1;
         for (let i = 0; i <= cols; i++) {
           for (let j = 0; j <= rows; j++) {
             const x = i * SPACING, y = j * SPACING;
+            if (mask && x >= mask.l && x <= mask.ri && y >= mask.t && y <= mask.b) continue;
             const d = Math.hypot(x - mouse.x, y - mouse.y);
             const lit = d < GLOW_R;
             const alpha = lit ? 0.04 + (1 - d / GLOW_R) * 0.7 : 0.04;
