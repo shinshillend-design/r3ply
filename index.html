@@ -273,7 +273,7 @@
       position: relative; min-height: 100vh; display: flex; align-items: center;
       overflow: hidden; padding-top: var(--nav-h);
     }
-    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
     .hero-glow {
       position: absolute; top: -25%; left: 50%; transform: translateX(-50%);
       width: 90vw; max-width: 1100px; aspect-ratio: 1.6/1;
@@ -1008,7 +1008,7 @@
 
   <!-- HERO -->
   <header class="hero" id="home">
-    <canvas id="hero-canvas"></canvas>
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-glow"></div>
     <div class="hero-inner">
       <div class="hero-left">
@@ -1397,89 +1397,156 @@
     const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.add('js');
 
-    /* HERO CANVAS - dot grid (DPR capped, pauses offscreen + hidden tab) */
+    /* HERO CANVAS - blue cursor trails and dot-field click ripples */
     (function() {
       const canvas = document.getElementById('hero-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let mouse = { x: -9999, y: -9999 };
-      let ripples = [], raf = null, running = false;
-      const SPACING = 30, DOT_R = 1.5, GLOW_R = 220;
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const hero = canvas && canvas.closest('.hero');
+      const ctx = canvas && canvas.getContext('2d');
+      if (!hero || !ctx) return;
 
-      function resize() {
-        canvas.width = canvas.offsetWidth * DPR;
-        canvas.height = canvas.offsetHeight * DPR;
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      window.addEventListener('resize', resize);
-      window.addEventListener('orientationchange', resize);
-      resize();
+      const motion = matchMedia('(prefers-reduced-motion: reduce)');
+      const pointer = matchMedia('(hover: hover) and (pointer: fine)');
+      const rgb = getComputedStyle(hero).getPropertyValue('--accent-rgb').trim().split(/[\s,]+/).map(Number);
+      const blue = rgb.length === 3 && rgb.every(Number.isFinite) ? rgb : [79, 158, 255];
+      const TRAIL_LIFE = 680, RIPPLE_LIFE = 1700, MAX_TRAIL = 24;
+      let width = 1, height = 1, radius = 100, dots = [], masks = [];
+      let trail = [], ripples = [], frame = null, inView = true, lastPaint = 0;
+      let phase = 0, previousTime = 0, previousPoint = null;
+      const animated = () => !motion.matches && pointer.matches;
+      const canRun = () => animated() && inView && !document.hidden;
 
-      document.addEventListener('mousemove', e => {
-        const r = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-      });
-      document.addEventListener('touchmove', e => {
-        const r = canvas.getBoundingClientRect();
-        mouse.x = e.touches[0].clientX - r.left; mouse.y = e.touches[0].clientY - r.top;
-      }, { passive: true });
-      canvas.addEventListener('click', e => {
-        const r = canvas.getBoundingClientRect();
-        ripples.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 0, a: 0.5 });
-      });
-      canvas.addEventListener('touchstart', e => {
-        const r = canvas.getBoundingClientRect();
-        ripples.push({ x: e.touches[0].clientX - r.left, y: e.touches[0].clientY - r.top, r: 0, a: 0.5 });
-      }, { passive: true });
-
-      function textMask() {
-        const cr = canvas.getBoundingClientRect();
-        const els = canvas.parentElement.querySelectorAll('.hero-call-note, .hero-trust');
-        if (!els.length) return null;
-        const rects = [...els].map(el => el.getBoundingClientRect());
-        const pad = 8;
-        return {
-          l: Math.min(...rects.map(r => r.left)) - cr.left - pad,
-          t: Math.min(...rects.map(r => r.top)) - cr.top - pad,
-          ri: Math.max(...rects.map(r => r.right)) - cr.left + pad,
-          b: Math.max(...rects.map(r => r.bottom)) - cr.top + pad
-        };
-      }
-      function draw() {
-        const w = canvas.offsetWidth, h = canvas.offsetHeight;
-        ctx.clearRect(0, 0, w, h);
-        const mask = textMask();
-        const cols = Math.ceil(w / SPACING) + 1, rows = Math.ceil(h / SPACING) + 1;
-        for (let i = 0; i <= cols; i++) {
-          for (let j = 0; j <= rows; j++) {
-            const x = i * SPACING, y = j * SPACING;
-            if (mask && x >= mask.l && x <= mask.ri && y >= mask.t && y <= mask.b) continue;
-            const d = Math.hypot(x - mouse.x, y - mouse.y);
-            const lit = d < GLOW_R;
-            const alpha = lit ? 0.04 + (1 - d / GLOW_R) * 0.7 : 0.04;
-            ctx.beginPath(); ctx.arc(x, y, DOT_R, 0, Math.PI * 2);
-            ctx.fillStyle = lit ? `rgba(79,158,255,${alpha})` : `rgba(255,255,255,${alpha})`;
-            ctx.fill();
+      function measure() {
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        radius = Math.max(80, Math.min(120, width * 0.075));
+        masks = [...hero.querySelectorAll('.hero-call-note, .hero-trust')].map(el => {
+          const r = el.getBoundingClientRect();
+          return { left: r.left - rect.left - 10, top: r.top - rect.top - 10,
+            right: r.right - rect.left + 10, bottom: r.bottom - rect.top + 10 };
+        });
+        const spacing = width < 600 ? 22 : 16;
+        dots = [];
+        for (let y = spacing / 2; y < height; y += spacing) {
+          for (let x = spacing / 2; x < width; x += spacing) {
+            if (masks.some(m => x >= m.left && x <= m.right && y >= m.top && y <= m.bottom)) continue;
+            const edge = Math.min(1, Math.min(x, width - x) / 90);
+            dots.push({ x, y, edge, distance: Math.hypot(x - width * 0.5, y - height * 0.35) });
           }
         }
-        ripples = ripples.filter(rip => rip.a > 0.005);
-        ripples.forEach(rip => {
-          rip.r += 5; rip.a *= 0.93;
-          ctx.beginPath(); ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(79,158,255,${rip.a})`; ctx.lineWidth = 1.5; ctx.stroke();
-        });
-        if (!REDUCE) raf = requestAnimationFrame(draw);
+        trail = [];
+        ripples = [];
+        previousPoint = null;
+        paint(performance.now(), false);
+        sync();
       }
-      function start() { if (!running && !REDUCE) { running = true; draw(); } }
-      function stop() { running = false; if (raf) cancelAnimationFrame(raf); }
 
-      if (REDUCE) { draw(); }
-      else {
-        new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0 }).observe(canvas);
-        document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      function paint(now, moving) {
+        if (moving) phase += Math.min(50, now - (previousTime || now)) / 1000;
+        previousTime = now;
+        trail = trail.filter(p => now - p.time < TRAIL_LIFE);
+        ripples = ripples.filter(p => now - p.time < RIPPLE_LIFE);
+        const strokes = trail.map(p => ({ ...p, fade: Math.pow(1 - (now - p.time) / TRAIL_LIFE, 1.5),
+          dx: p.x - p.fromX, dy: p.y - p.fromY,
+          length: Math.pow(p.x - p.fromX, 2) + Math.pow(p.y - p.fromY, 2) }));
+        const waves = ripples.map(p => ({ ...p, radius: (now - p.time) * 0.62,
+          fade: Math.pow(1 - (now - p.time) / RIPPLE_LIFE, 2) }));
+        ctx.clearRect(0, 0, width, height);
+        for (const dot of dots) {
+          let wake = 0, ripple = 0;
+          if (moving) {
+            for (const p of strokes) {
+              if (Math.abs(dot.x - p.x) > radius + Math.abs(p.dx) || Math.abs(dot.y - p.y) > radius + Math.abs(p.dy)) continue;
+              const t = p.length ? Math.max(0, Math.min(1, ((dot.x - p.fromX) * p.dx + (dot.y - p.fromY) * p.dy) / p.length)) : 0;
+              const distance = Math.hypot(dot.x - p.fromX - p.dx * t, dot.y - p.fromY - p.dy * t);
+              if (distance < radius) wake = Math.max(wake, Math.pow(1 - distance / radius, 2) * p.fade);
+            }
+            for (const p of waves) {
+              const distance = Math.abs(Math.hypot(dot.x - p.x, dot.y - p.y) - p.radius);
+              const thickness = 24 + p.radius * 0.045;
+              if (distance < thickness) ripple = Math.max(ripple, (1 - distance / thickness) * p.fade);
+            }
+          }
+          const light = Math.min(1, Math.max(wake, ripple));
+          const breath = moving ? (Math.sin(phase * 1.25 - dot.distance * 0.012) + 1) * 0.016 : 0.013;
+          const alpha = (0.034 + breath + light * 0.66) * dot.edge;
+          const blend = Math.min(1, light * 1.7);
+          const color = blue.map((channel, i) => Math.round([242, 243, 248][i] * (1 - blend) + channel * blend));
+          ctx.fillStyle = `rgba(${color.join(',')},${alpha})`;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, 0.85 + light * 1.15, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
+
+      function tick(now) {
+        frame = null;
+        if (!canRun()) return;
+        // Limit the background to 40 fps; page controls keep their normal frame rate.
+        if (now - lastPaint >= 25) { paint(now, true); lastPaint = now; }
+        frame = requestAnimationFrame(tick);
+      }
+      function stop() {
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+        previousTime = 0;
+      }
+      function sync() {
+        if (canRun()) {
+          if (frame === null) frame = requestAnimationFrame(tick);
+        } else {
+          stop();
+          if (!animated()) {
+            trail = []; ripples = []; previousPoint = null;
+            paint(performance.now(), false);
+          }
+        }
+      }
+      function localPoint(e) {
+        const rect = canvas.getBoundingClientRect();
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+      hero.addEventListener('pointermove', e => {
+        if (!canRun() || e.pointerType === 'touch') return;
+        const now = performance.now();
+        if (previousPoint && now - previousPoint.time < 12) return;
+        const p = localPoint(e);
+        if (p.x < 0 || p.y < 0 || p.x > width || p.y > height) return;
+        const nearby = previousPoint && now - previousPoint.time < 100 &&
+          Math.hypot(p.x - previousPoint.x, p.y - previousPoint.y) < radius * 2;
+        trail.push({ ...p, fromX: nearby ? previousPoint.x : p.x,
+          fromY: nearby ? previousPoint.y : p.y, time: now });
+        if (trail.length > MAX_TRAIL) trail.shift();
+        previousPoint = { ...p, time: now };
+      }, { passive: true });
+      hero.addEventListener('pointerleave', () => { previousPoint = null; });
+      hero.addEventListener('click', e => {
+        if (!canRun() || e.target.closest('a, button, input, select, textarea, summary')) return;
+        ripples.push({ ...localPoint(e), time: performance.now() });
+        if (ripples.length > 4) ripples.shift();
+      });
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          inView = entries.some(entry => entry.isIntersecting);
+          if (!inView) { trail = []; ripples = []; previousPoint = null; }
+          sync();
+        }, { threshold: 0 }).observe(hero);
+      }
+      if ('ResizeObserver' in window) new ResizeObserver(measure).observe(hero);
+      else window.addEventListener('resize', measure, { passive: true });
+      document.addEventListener('visibilitychange', sync);
+      motion.addEventListener('change', sync);
+      pointer.addEventListener('change', sync);
+      window.addEventListener('pageshow', measure);
+      if (document.fonts) document.fonts.ready.then(measure);
+      measure();
     })();
+
 
     /* SCROLL REVEAL */
     if (!REDUCE) {
