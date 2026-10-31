@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R3PLY - Daily replies for Web3 teams and founders on X</title>
-  <meta name="description" content="Daily human-written replies for Web3 project accounts and founder accounts on X. See original client analytics, get 5 free sample replies, or book a free 30-minute X audit.">
+  <meta name="description" content="Daily human-written replies for Web3 project accounts and founder accounts on X. See original client analytics, get a free reply strategy for your account, or book a free 30-minute X audit.">
   <meta property="og:title" content="R3PLY - CT Presence for Web3 Teams and Founders">
-  <meta property="og:description" content="Daily human-written replies for Web3 teams and founders. See original client analytics and get 5 free sample replies.">
+  <meta property="og:description" content="Daily human-written replies for Web3 teams and founders. See original client analytics and get a free reply strategy for your account.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://r3ply.xyz/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -975,7 +975,7 @@
       .hero-trust { gap: 10px 14px; }
     }
 
-    /* Preview: hero report card, labels, sample-replies path, buyer pain cards, featured case */
+    /* Preview: hero report card, labels, reply-strategy path, buyer pain cards, featured case */
     .hero-right-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px 4px; }
     .ct-card-label { display: inline-block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-300); margin-bottom: 12px; }
     .ct-media { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -4px 0 14px; padding: 14px; border: 1px dashed var(--accent-border); border-radius: 12px; background: rgba(var(--accent-rgb), .05); text-decoration: none; }
@@ -991,10 +991,12 @@
     .ct-report-stats div { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid var(--accent-border); border-radius: 10px; background: rgba(var(--accent-rgb), .04); }
     .ct-report-stats b { font-size: 20px; color: var(--accent); letter-spacing: -.02em; }
     .ct-report-stats span { font-size: 12px; color: var(--text-dim); }
-    .ct-quote { margin: 0; padding-left: 12px; border-left: 2px solid var(--accent); font-size: 14px; line-height: 1.6; color: var(--text); }
-    .ct-quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 12px; color: var(--muted); }
+    .ct-report-note { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
 
-    #samples .si { padding-top: 56px; padding-bottom: 56px; }
+    #strategy .si { padding-top: 56px; padding-bottom: 56px; }
+    .strategy-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
+    .strategy-flow span { padding: 6px 10px; border: 1px solid var(--accent-border); border-radius: 999px; background: rgba(var(--accent-rgb), .05); }
+    .strategy-flow i { font-style: normal; color: var(--accent); }
     .samples-wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 40px; align-items: center; max-width: 1100px; margin: 0 auto; padding: 40px; border-color: var(--accent-border); }
     .samples-body { font-size: 17px; line-height: 1.7; color: var(--text-dim); margin: 16px 0 20px; max-width: 560px; }
     .samples-steps { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
@@ -1010,12 +1012,8 @@
     .pain-card .pain-text { margin-bottom: 0; }
 
     #proof .proof-case.proof-case-featured { grid-column: 1 / -1; min-height: 0; border-color: var(--accent-border); }
-    .proof-featured-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 28px; align-items: start; }
+    .proof-featured-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 28px; align-items: start; }
     .proof-case .proof-niche a { color: var(--accent-300); text-decoration: none; }
-    .proof-quote { margin: 0; padding: 22px; border: 1px solid var(--border); border-radius: 16px; background: rgba(var(--accent-rgb), .05); }
-    .proof-quote blockquote { margin: 0; font-family: 'EB Garamond', serif; font-style: italic; font-size: 24px; line-height: 1.35; color: var(--text); }
-    .proof-quote figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
-    .proof-case .proof-row.proof-row-2 { grid-template-columns: minmax(0, 1.6fr) minmax(0, .8fr); align-items: start; }
     .proof-case .proof-comparison.proof-single th:first-child { width: 70%; }
 
     @media (max-width: 1000px) {
@@ -1023,7 +1021,6 @@
       .samples-wrap { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
     }
     @media (max-width: 520px) {
-      .proof-case .proof-row.proof-row-2 { grid-template-columns: 1fr; }
       .ct-report-stats b { font-size: 17px; }
       .samples-wrap { padding: 22px; }
     }
@@ -1073,9 +1070,9 @@
         <p class="hero-sub">Human-written replies from your project account, your founder account, or both, in the conversations your audience already lives in. We handle the strategy, execution and weekly reporting.</p>
         <div class="hero-ctas">
           <a href="#calendly" data-book-call class="btn btn-blue magnetic">Book my free X audit</a>
-          <a href="#samples" class="btn btn-ghost">Get 5 free sample replies</a>
+          <a href="#strategy" class="btn btn-ghost">Get your reply strategy</a>
         </div>
-        <p class="hero-call-note">Not ready for a call? Send your handle and get 5 replies written for your account, free, before any call. Or book 30 minutes with the R3PLY founder.</p>
+        <p class="hero-call-note">Not ready for a call? Send your handle and get a written reply strategy for your account first. Or book 30 minutes with the R3PLY founder.</p>
         <div class="hero-trust">
           <span class="trust-item">Human-written replies</span>
           <span class="trust-item">Native X Delegate</span>
@@ -1098,7 +1095,7 @@
             <div><b>51.9K</b><span>impressions</span></div>
             <div><b>139</b><span>profile visits</span></div>
           </div>
-          <blockquote class="ct-quote">&ldquo;Great work here! I'm gonna give intern a multipli badge this week.&rdquo;<cite>Multipli team, on the Week 1 report</cite></blockquote>
+          <p class="ct-report-note">Daily quality checks and a weekly analytics report, run through X Delegate.</p>
         </div>
         <div class="ct-card" data-tilt>
           <span class="ct-card-label">Reply we wrote for a client</span>
@@ -1143,15 +1140,7 @@
 <div class="proof-stat"><span class="proof-stat-val">139</span><span class="proof-stat-lbl">Profile visits</span></div></div>
               <p class="proof-description">Reply presence for the intern account of Multipli, a DeFi protocol that reported crossing $500M+ in TVL in September 2026. Week 1: 340 replies delivered, about 49 a day against a 50-a-day plan, with daily quality checks and a weekly analytics report.</p>
             </div>
-            <figure class="proof-quote">
-              <blockquote>&ldquo;Great work here! I'm gonna give intern a multipli badge this week.&rdquo;</blockquote>
-              <figcaption>Multipli team, replying to the Week 1 report</figcaption>
-            </figure>
-          </div>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Account-wide X analytics for Sep 25&ndash;Oct 1, 2026. The 53 &ldquo;Replies&rdquo; in X analytics count replies the account received, separate from the 340 replies our team posted. X shows rounded comparison percentages (about +6K% impressions) and a 0.9% engagement rate, down 71%. The TVL figure describes the client protocol, not a result of our replies.</p>
-            <div class="proof-row proof-row-2" data-proof-row><button type="button" class="proof-shot glass-card"
+            <div class="proof-row proof-featured-shot" data-proof-row><button type="button" class="proof-shot glass-card"
               data-group="multipli" data-index="0"
               data-client="Multipli Intern &middot; B2B DeFi"
               data-range="Week 1 &middot; Sep 25&ndash;Oct 1, 2026"
@@ -1159,15 +1148,11 @@
               aria-label="Open Multipli Intern Week 1 analytics screenshot, Sep 25 to Oct 1, 2026">
               <img src="assets/proof-multipli-week1.jpg" alt="Multipli Intern X analytics, Sep 25 to Oct 1, 2026: 51.9K impressions, 139 profile visits, 478 engagements" loading="lazy" width="1276" height="993">
               <span class="proof-cap">Week 1 &middot; Sep 25&ndash;Oct 1, 2026</span>
-            </button><button type="button" class="proof-shot glass-card"
-              data-group="multipli" data-index="1"
-              data-client="Multipli Intern &middot; client feedback"
-              data-range="Reply to the Week 1 report"
-              data-stats="&ldquo;Great work here! I'm gonna give intern a multipli badge this week.&rdquo;"
-              aria-label="Open the Multipli team's original reply to the Week 1 report">
-              <img src="assets/proof-multipli-feedback.png" alt="Original message from the Multipli team: Great work here! I'm gonna give intern a multipli badge this week" loading="lazy" width="345" height="158">
-              <span class="proof-cap">Original client reply</span>
             </button></div>
+          </div>
+          <details class="proof-details">
+            <summary>Inspect results &amp; analytics</summary>
+            <p class="proof-evidence-note">Account-wide X analytics for Sep 25&ndash;Oct 1, 2026. The 53 &ldquo;Replies&rdquo; in X analytics count replies the account received, separate from the 340 replies our team posted. X shows rounded comparison percentages (about +6K% impressions) and a 0.9% engagement rate, down 71%. The TVL figure describes the client protocol, not a result of our replies.</p>
             <h4 class="proof-expanded-heading">Week 1 metrics</h4>
             <table class="proof-comparison proof-single" aria-label="Multipli Intern Week 1 metrics">
               <thead><tr><th scope="col">Metric</th><th scope="col">Week 1</th></tr></thead>
@@ -1328,24 +1313,27 @@
   </section>
 
 
-  <!-- SAMPLE REPLIES: low-friction path before a call -->
-  <section class="sw" id="samples" aria-labelledby="samples-title">
+  <!-- REPLY STRATEGY: low-friction path before a call -->
+  <section class="sw" id="strategy" aria-labelledby="strategy-title">
     <div class="si">
       <div class="samples-wrap glass-card reveal">
         <div class="samples-copy">
           <span class="eyebrow">Before any call</span>
-          <h2 class="h-md" id="samples-title">See replies written for <em class="accent">your account</em> first.</h2>
-          <p class="samples-body">Send your X handle. We pick 5 live threads your audience is reading and write 5 replies in your voice within 24 hours. Nothing gets posted, and you don&rsquo;t need to book anything.</p>
+          <h2 class="h-md" id="strategy-title">Get a reply strategy for <em class="accent">your account</em> first.</h2>
+          <p class="samples-body">Send your X handle and what you&rsquo;re building. We look at where your target audience already spends time on X, find the gap, and send back a written reply strategy by DM. No account access, no call, no payment.</p>
           <ul class="samples-steps">
-            <li><b>1</b><span>Send your handle, team or personal account, and who you want to reach</span></li>
-            <li><b>2</b><span>We draft 5 replies under real threads in your niche</span></li>
-            <li><b>3</b><span>You judge the voice before deciding anything</span></li>
+            <li><b>1</b><span>The gap: where your audience is talking and you&rsquo;re not replying</span></li>
+            <li><b>2</b><span>Your ICP and the accounts they already follow</span></li>
+            <li><b>3</b><span>The plan: what to reply to, in what voice, and how it brings people to your product</span></li>
           </ul>
         </div>
         <div class="samples-actions">
-          <!-- TODO: point this to the Tally sample-request form (handle, team/personal, Telegram, monthly budget range) -->
-          <a href="https://x.com/shynxbt" target="_blank" rel="noopener" class="btn btn-blue btn-lg btn-full" data-sample-request>Get 5 free sample replies</a>
-          <p class="samples-note">Opens a DM with @shynxbt, the R3PLY founder. Send your handle and you&rsquo;ll get the replies back within 24 hours.</p>
+          <div class="strategy-flow" aria-label="Relevant reply, then your X profile, then your product">
+            <span>Relevant reply</span><i aria-hidden="true">&rarr;</i><span>X profile</span><i aria-hidden="true">&rarr;</i><span>Your product</span>
+          </div>
+          <!-- TODO: point this to the Tally strategy-request form (handle, what you're building, team/personal, Telegram, monthly budget range) -->
+          <a href="https://x.com/shynxbt" target="_blank" rel="noopener" class="btn btn-blue btn-lg btn-full" data-strategy-request>Get your reply strategy</a>
+          <p class="samples-note">Opens a DM with @shynxbt, the R3PLY founder. Send your handle and what you&rsquo;re building.</p>
           <a href="#calendly" data-book-call class="samples-alt">Prefer a call? Book the free 30-minute X audit &rarr;</a>
         </div>
       </div>
@@ -1371,7 +1359,7 @@
           <span class="spotlight"></span>
           <span class="pain-kicker">02 &middot; Trust</span>
           <h3 class="pain-title">Your account looks ghosted.</h3>
-          <p class="pain-text">Partners, investors and users check your replies before they answer your DM. A quiet week and an empty replies tab read as a slow project, even when the team ships daily.</p>
+          <p class="pain-text">Partners, investors and users check your X account before even checking out your product. A quiet week and an empty replies tab looks like a slow project, even when the team ships daily.</p>
         </article>
         <article class="glass-card pain-card reveal s3" data-tilt>
           <span class="spotlight"></span>
@@ -1845,7 +1833,7 @@
       }
     })();
 
-    /* PROOF OF WORK — focus gallery + lightbox */
+    /* PROOF OF WORK - focus gallery + lightbox */
     (function() {
       const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 
