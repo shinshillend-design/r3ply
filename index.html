@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R3PLY - Daily replies for Web3 teams and founders on X</title>
   <meta name="description" content="Daily human-written replies for Web3 project accounts and founder accounts on X. See original client analytics, get a free reply strategy for your account, or book a free 30-minute X audit.">
+  <link rel="canonical" href="https://r3ply.xyz/">
   <meta property="og:title" content="R3PLY - CT Presence for Web3 Teams and Founders">
   <meta property="og:description" content="Daily human-written replies for Web3 teams and founders. See original client analytics and get a free reply strategy for your account.">
-  <link rel="canonical" href="https://r3ply.xyz/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://r3ply.xyz/">
   <meta property="og:image" content="https://r3ply.xyz/og-image.png">
@@ -15,1627 +15,1059 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="R3PLY: daily human-written replies for Web3 teams and founders on X">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#050507">
+  <meta name="theme-color" content="#07080b">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400;1,500;1,600&family=Figtree:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-
-    /* ========================
-       VARIABLES
-    ======================== */
-    :root {
-      --bg:           #050507;
-      --bg-alt:       #07070e;
-      --bg-card:      #0b0b15;
-      --bg-card-2:    #11111d;
-      --border:       #181824;
-      --border-soft:  #131320;
-      --text:         #f2f3f8;
-      --text-dim:     #c2c6d4;
-      --muted:        #828aa0;
-      --faint:        #767d93;
-      --accent:       #4f9eff;
-      --accent-300:   #93c2ff;
-      --accent-dim:   rgba(79,158,255,0.07);
-      --accent-glow:  rgba(79,158,255,0.20);
-      --accent-border:rgba(79,158,255,0.24);
-      --accent-rgb:   79, 158, 255;
-      --red:          #ff5a5a;
-      --red-dim:      rgba(255,90,90,0.07);
-
-      --radius:       16px;
-      --radius-lg:    24px;
-      --maxw:         1240px;
-      --nav-h:        66px;
-      --ease:         cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-spring:  cubic-bezier(0.34, 1.4, 0.5, 1);
-    }
-
-    @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-
-    /* ========================
-       RESET
-    ======================== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Figtree', sans-serif;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      isolation: isolate;
-    }
-    /* Layered gradient mesh - kills the flat black look */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(60% 45% at 12% -5%, rgba(var(--accent-rgb),0.10), transparent 62%),
-        radial-gradient(48% 38% at 92% 8%, rgba(139,92,246,0.07), transparent 60%),
-        linear-gradient(rgba(var(--accent-rgb),0.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(var(--accent-rgb),0.012) 1px, transparent 1px);
-      background-size: auto, auto, 64px 64px, 64px 64px;
-      pointer-events: none;
-      z-index: -2;
-    }
-    /* SVG grain overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.035;
-      mix-blend-mode: soft-light;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* Skip link + focus */
-    .skip-link {
-      position: fixed; left: 16px; top: 16px; z-index: 1000;
-      background: var(--accent); color: #04152e;
-      padding: 10px 16px; border-radius: 999px;
-      font-weight: 600; font-size: 13px; text-decoration: none;
-      transform: translateY(-160%); transition: transform 0.2s;
-    }
-    .skip-link:focus { transform: translateY(0); }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-
-    /* ========================
-       SCROLL PROGRESS BAR
-    ======================== */
-    .progress-bar {
-      position: fixed; top: 0; left: 0; height: 2px; width: 100%;
-      transform-origin: 0 50%; transform: scaleX(0);
-      background: linear-gradient(90deg, var(--accent), var(--accent-300));
-      box-shadow: 0 0 16px rgba(var(--accent-rgb),0.6);
-      z-index: 200; pointer-events: none;
-    }
-    @supports (animation-timeline: scroll()) {
-      .progress-bar {
-        animation: growx linear both;
-        animation-timeline: scroll(root block);
-      }
-      @keyframes growx { to { transform: scaleX(1); } }
-    }
-
-    /* ========================
-       TYPOGRAPHY
-    ======================== */
-    .eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .eyebrow::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent); box-shadow: 0 0 8px var(--accent);
-    }
-    .h-xl {
-      font-family: 'Figtree', sans-serif;
-      font-size: clamp(52px, 7.5vw, 88px);
-      font-weight: 800; line-height: 1.0;
-      letter-spacing: -0.03em; color: var(--text);
-    }
-    .h-lg {
-      font-family: 'Figtree', sans-serif;
-      font-size: clamp(38px, 5.5vw, 62px);
-      font-weight: 700; line-height: 1.04;
-      letter-spacing: -0.025em; color: var(--text);
-    }
-    .h-md {
-      font-family: 'Figtree', sans-serif;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 700; line-height: 1.1;
-      letter-spacing: -0.02em; color: var(--text);
-    }
-    em.accent {
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      color: var(--accent-300);
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      font-size: 0.94em;
-    }
-
-    /* ========================
-       BUTTONS
-    ======================== */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; border: none; border-radius: 999px;
-      font-family: 'Figtree', sans-serif; font-size: 15px; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: opacity 0.2s, transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.2s;
-      white-space: nowrap;
-    }
-    .btn-blue {
-      background: linear-gradient(180deg, var(--accent-300), var(--accent));
-      color: #04152e; padding: 14px 32px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 24px -8px var(--accent-glow);
-    }
-    .btn-blue:hover {
-      transform: translateY(-2px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 14px 38px -10px var(--accent-glow);
-    }
-    .btn-ghost {
-      background: rgba(255,255,255,0.03); color: var(--text);
-      border: 1px solid var(--border); padding: 14px 32px;
-    }
-    .btn-ghost:hover { border-color: var(--accent-border); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
-    .btn-lg { padding: 16px 48px; font-size: 16px; }
-    .btn-full { width: 100%; }
-
-    /* ========================
-       NAVBAR - floating glass pill
-    ======================== */
-    .nav {
-      position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
-      z-index: 100; width: min(var(--maxw), calc(100% - 28px));
-      height: var(--nav-h); border-radius: 999px;
-      backdrop-filter: blur(16px) saturate(150%);
-      -webkit-backdrop-filter: blur(16px) saturate(150%);
-      background: rgba(8,8,14,0.6);
-      border: 1px solid var(--border);
-      box-shadow: 0 16px 50px rgba(0,0,0,0.35);
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .nav.scrolled { background: rgba(6,6,10,0.82); border-color: var(--accent-border); }
-    .nav:has(.nav-mobile-menu.open) { height: auto; border-radius: 24px; padding-bottom: 6px; }
-    .nav:has(.nav-mobile-menu.open) .nav-inner { height: var(--nav-h); flex-shrink: 0; }
-    .nav-inner {
-      height: 100%; padding: 0 10px 0 26px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: 'Figtree', sans-serif; font-weight: 800; font-size: 18px;
-      letter-spacing: -0.03em; color: var(--text); text-decoration: none;
-    }
-    .nav-logo span { color: var(--accent); letter-spacing: -0.03em; }
-    .nav-links { display: flex; gap: 30px; }
-    .nav-links a {
-      font-size: 14px; font-weight: 400; color: var(--muted);
-      text-decoration: none; transition: color 0.2s; position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0;
-      background: var(--accent); transition: width 0.3s var(--ease);
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .nav-links a.active::after { width: 100%; }
-    .nav-btn {
-      background: linear-gradient(180deg, var(--accent-300), var(--accent));
-      color: #04152e; border: none; border-radius: 999px;
-      padding: 10px 22px; font-family: 'Figtree', sans-serif;
-      font-weight: 600; font-size: 13px; cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 22px -8px var(--accent-glow);
-    }
-    .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 30px -10px var(--accent-glow); }
-    .nav-burger {
-      display: none; width: 36px; height: 36px; border: none; background: transparent;
-      cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
-      margin-left: 6px;
-    }
-    .nav-burger span {
-      display: block; width: 18px; height: 1.5px; background: var(--text);
-      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
-    }
-    .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-    .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .nav-mobile-menu {
-      display: none; flex-direction: column; gap: 4px;
-      max-height: 0; overflow: hidden; opacity: 0;
-      padding: 0 20px; transition: max-height 0.35s var(--ease), opacity 0.3s var(--ease), padding 0.35s var(--ease);
-    }
-    .nav-mobile-menu.open { max-height: 320px; opacity: 1; padding: 10px 20px 20px; }
-    .nav-mobile-menu a {
-      font-size: 15px; font-weight: 400; color: var(--muted); text-decoration: none;
-      padding: 12px 4px; border-bottom: 1px solid var(--border);
-    }
-    .nav-mobile-menu a:hover { color: var(--text); }
-    .nav-mobile-menu .btn { margin-top: 14px; }
-
-    /* ========================
-       HERO
-    ======================== */
-    .hero {
-      position: relative; min-height: 100vh; display: flex; align-items: center;
-      overflow: hidden; padding-top: var(--nav-h);
-    }
-    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-    .hero-glow {
-      position: absolute; top: -25%; left: 50%; transform: translateX(-50%);
-      width: 90vw; max-width: 1100px; aspect-ratio: 1.6/1;
-      background: radial-gradient(ellipse, rgba(var(--accent-rgb),0.13) 0%, transparent 62%);
-      z-index: 1; pointer-events: none;
-    }
-    .hero::after {
-      content: ''; position: absolute; left: 0; bottom: 0;
-      width: 100%; height: 240px;
-      background: linear-gradient(to bottom, transparent 0%, var(--bg) 88%);
-      z-index: 2; pointer-events: none;
-    }
-    .hero-inner {
-      position: relative; z-index: 3; width: 100%; max-width: var(--maxw);
-      margin: 0 auto; padding: clamp(60px, 9vh, 96px) clamp(24px, 5vw, 80px);
-      display: grid; grid-template-columns: 54% 46%; gap: 48px; align-items: center;
-    }
-    .hero-left { display: flex; flex-direction: column; }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(var(--accent-rgb),0.06);
-      border: 1px solid var(--accent-border); border-radius: 999px;
-      padding: 6px 14px; font-size: 12px; font-weight: 500;
-      color: var(--accent); letter-spacing: 0.04em; margin-bottom: 26px; width: fit-content;
-    }
-    .hero-tag .live-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); animation: livepulse 2.2s ease-in-out infinite;
-    }
-    @keyframes livepulse {
-      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0.5); }
-      50% { opacity: 0.5; transform: scale(0.8); box-shadow: 0 0 0 5px rgba(var(--accent-rgb),0); }
-    }
-    .hero-heading {
-      font-family: 'Figtree', sans-serif;
-      font-size: clamp(50px, 7.4vw, 86px);
-      font-weight: 800; line-height: 1.0;
-      letter-spacing: -0.03em; color: var(--text); margin-bottom: 24px;
-    }
-    .hero-heading em {
-      font-family: 'EB Garamond', serif; font-style: italic;
-      font-weight: 500; color: var(--accent-300); font-size: 0.94em;
-    }
-    .hero-sub {
-      font-size: clamp(16px, 1.8vw, 19px); font-weight: 300; line-height: 1.7;
-      color: var(--text-dim); max-width: 470px; margin-bottom: 34px;
-    }
-    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
-    .hero-trust { display: flex; gap: 22px; flex-wrap: wrap; }
-    .trust-item {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 12px; color: var(--muted); white-space: nowrap;
-    }
-    .trust-item::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent); display: block; flex-shrink: 0;
-    }
-
-    /* Hero right - floating tweet cards */
-    .hero-right { position: relative; }
-    .ct-card {
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 20px; position: relative;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
-      transition: transform 0.4s var(--ease), border-color 0.3s;
-    }
-    .ct-card + .ct-card { margin-top: 14px; }
-    .ct-card::before {
-      content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-      background: linear-gradient(145deg, rgba(var(--accent-rgb),0.3), rgba(255,255,255,0.03) 60%);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      pointer-events: none; opacity: 0.6;
-    }
-    .hero-right .ct-card:nth-child(1) { animation: floaty 6s ease-in-out infinite; }
-    .hero-right .ct-card:nth-child(2) { animation: floaty 7s ease-in-out infinite 0.8s; }
-    .hero-right .ct-card:nth-child(3) { animation: floaty 6.5s ease-in-out infinite 1.6s; }
-    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-    .ct-card:hover { border-color: var(--accent-border); }
-    .ct-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .ct-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 13px;
-      flex-shrink: 0; border: 1px solid;
-    }
-    .ct-avatar.blue { background: rgba(var(--accent-rgb),0.1); border-color: var(--accent-border); color: var(--accent); }
-    .ct-avatar.purple { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.22); color: #a78bfa; }
-    .ct-avatar.orange { background: rgba(251,146,60,0.1); border-color: rgba(251,146,60,0.22); color: #fb923c; }
-    .ct-avatar.img-avatar { background: var(--bg-alt); border-color: var(--border); padding: 0; overflow: hidden; }
-    .ct-avatar.img-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-    .ct-meta { flex: 1; min-width: 0; }
-    .ct-name { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.2; }
-    .ct-handle { font-size: 12px; font-weight: 300; color: var(--muted); }
-    .ct-x-icon { opacity: 0.45; flex-shrink: 0; }
-    .ct-x-link { display: flex; flex-shrink: 0; transition: opacity 0.2s; }
-    .ct-x-link:hover .ct-x-icon { opacity: 0.85; }
-    .ct-reply-to { font-size: 12px; font-weight: 300; color: var(--muted); margin-bottom: 10px; }
-    .ct-reply-to a { color: var(--accent); text-decoration: none; }
-    .ct-text { font-size: 14px; font-weight: 300; line-height: 1.65; color: var(--text-dim); margin-bottom: 14px; }
-    .ct-stats { display: flex; gap: 16px; font-size: 12px; font-weight: 300; color: var(--muted); }
-    .ct-imp { color: var(--accent); font-weight: 500; }
-
-    /* Hero load animations */
-    @keyframes fadeUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
-    .hero-left > * { animation: fadeUp 0.9s var(--ease) forwards; opacity:0; }
-    .hero-left > *:nth-child(1) { animation-delay: 0.06s; }
-    .hero-left > *:nth-child(2) { animation-delay: 0.16s; }
-    .hero-left > *:nth-child(3) { animation-delay: 0.26s; }
-    .hero-left > *:nth-child(4) { animation-delay: 0.36s; }
-    .hero-left > *:nth-child(5) { animation-delay: 0.46s; }
-    .hero-right { animation: fadeUp 1s var(--ease) 0.5s forwards; opacity: 0; }
-
-    /* ========================
-       TICKER
-    ======================== */
-    .ticker {
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: var(--bg-alt); padding: 13px 0; overflow: hidden;
-      position: relative;
-    }
-    .ticker::before, .ticker::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
-    }
-    .ticker::before { left: 0; background: linear-gradient(90deg, var(--bg-alt), transparent); }
-    .ticker::after { right: 0; background: linear-gradient(270deg, var(--bg-alt), transparent); }
-    .ticker-track { display: flex; width: max-content; animation: tickscroll 36s linear infinite; }
-    .ticker:hover .ticker-track { animation-play-state: paused; }
-    @keyframes tickscroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-    .t-item {
-      display: flex; align-items: center; gap: 8px; padding: 0 34px;
-      white-space: nowrap; font-size: 12px; color: var(--muted);
-    }
-    .t-item strong { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--text-dim); }
-    .t-sep { width:4px; height:4px; border-radius:50%; background:var(--accent); opacity:0.5; flex-shrink:0; }
-
-    /* ========================
-       SECTION WRAPPERS
-    ======================== */
-    .sw { width: 100%; }
-    .sw-alt { background: var(--bg-alt); border-top: 1px solid var(--border-soft); }
-    .si { max-width: var(--maxw); margin: 0 auto; padding: clamp(80px, 10vh, 124px) clamp(24px, 5vw, 80px); }
-    .s-intro { text-align: center; max-width: 700px; margin: 0 auto 64px; }
-    .s-body { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--muted); max-width: 540px; margin: 14px auto 0; }
-
-    /* ========================
-       PAIN / GLASS CARDS
-    ======================== */
-    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; align-items: start; }
-    .glass-card {
-      position: relative;
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 24px; overflow: hidden;
-      transition: border-color 0.3s, transform 0.4s var(--ease);
-    }
-    .glass-card .spotlight {
-      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-      opacity: 0; transition: opacity 0.3s;
-      background: radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgba(var(--accent-rgb),0.14), transparent 60%);
-    }
-    .glass-card:hover .spotlight { opacity: 1; }
-    .pain-card:hover { border-color: rgba(255,90,90,0.28); transform: translateY(-5px); }
-    .pain-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .pain-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 13px;
-      flex-shrink: 0; border: 1px solid;
-    }
-    .pain-avatar.blue { background:rgba(var(--accent-rgb),0.1); border-color:var(--accent-border); color:var(--accent); }
-    .pain-avatar.purple { background:rgba(139,92,246,0.1); border-color:rgba(139,92,246,0.22); color:#a78bfa; }
-    .pain-avatar.orange { background:rgba(251,146,60,0.1); border-color:rgba(251,146,60,0.22); color:#fb923c; }
-    .pain-avatar.img-avatar { background: var(--bg-alt); border-color: var(--border); padding: 0; overflow: hidden; }
-    .pain-avatar.img-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-    .pain-name { font-size:14px; font-weight:500; color:var(--text); line-height:1.2; }
-    .pain-handle { font-size:12px; font-weight:300; color:var(--muted); }
-    .pain-text { font-size:15px; font-weight:300; line-height:1.65; color:var(--text-dim); margin-bottom:16px; position: relative; }
-    .pain-stats { display:flex; gap:16px; font-size:12px; color:var(--muted); position: relative; }
-    .pain-low { color:rgba(255,90,90,0.6); }
-
-    /* ========================
-       COMPARISON
-    ======================== */
-    .comp-grid {
-      display: grid; grid-template-columns: 1fr 1fr; max-width: 920px; margin: 0 auto;
-      border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
-    }
-    .comp-col { padding: 40px; }
-    .comp-col.bad { background:var(--red-dim); border-right:1px solid var(--border); }
-    .comp-col.good { background:var(--accent-dim); }
-    .comp-head {
-      font-family:'Figtree',sans-serif; font-size:13px; font-weight:700;
-      letter-spacing:0.1em; text-transform:uppercase; margin-bottom:28px;
-      display:flex; align-items:center; gap:8px;
-    }
-    .comp-col.bad .comp-head { color:var(--red); }
-    .comp-col.good .comp-head { color:var(--accent); }
-    .comp-list { display:flex; flex-direction:column; gap:14px; }
-    .comp-item { display:flex; align-items:flex-start; gap:10px; font-size:15px; font-weight:300; color:var(--text-dim); line-height:1.5; }
-    .comp-icon { flex-shrink:0; font-size:14px; margin-top:1px; }
-    .comp-col.bad .comp-icon { color:var(--red); }
-    .comp-col.good .comp-icon { color:var(--accent); }
-
-    /* ========================
-       PROCESS - sticky stacking timeline
-    ======================== */
-    .timeline { max-width: 760px; margin: 0 auto; }
-    .t-step {
-      position: sticky; top: calc(var(--nav-h) + 40px); margin-bottom: 26px;
-      display: flex; gap: 24px;
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      border: 1px solid var(--border); border-radius: var(--radius-lg);
-      padding: 30px; overflow: hidden;
-      box-shadow: 0 -16px 40px rgba(5,5,7,0.7);
-      transition: border-color 0.3s;
-    }
-    .t-step:nth-child(2) { top: calc(var(--nav-h) + 52px); }
-    .t-step:nth-child(3) { top: calc(var(--nav-h) + 64px); }
-    .t-step:nth-child(4) { top: calc(var(--nav-h) + 76px); }
-    .t-step:nth-child(5) { top: calc(var(--nav-h) + 88px); }
-    .t-step:hover { border-color: var(--accent-border); }
-    .t-step .step-num {
-      position: absolute; right: 22px; top: 14px;
-      font-family:'Space Mono',monospace; font-size:62px; font-weight:700; line-height:1;
-      color: rgba(var(--accent-rgb),0.1);
-    }
-    .t-dot {
-      width:44px; height:44px; border-radius:50%; flex-shrink:0;
-      background:rgba(var(--accent-rgb),0.1); border:1px solid var(--accent-border);
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--accent);
-    }
-    .t-content { flex:1; padding-top:4px; }
-    .t-title { font-family:'Figtree',sans-serif; font-size:19px; font-weight:600; color:var(--text); margin-bottom:8px; }
-    .t-body { font-size:14px; font-weight:300; line-height:1.65; color:var(--muted); max-width: 560px; }
-
-    /* ========================
-       PRICING - animated conic border
-    ======================== */
-    .pricing-wrap { max-width:480px; margin:0 auto; position: relative; }
-    .pricing-card {
-      position: relative; background:#080810;
-      border-radius:var(--radius-lg); padding:48px 40px; overflow: hidden;
-    }
-    .pricing-card::before {
-      content:''; position:absolute; inset:0; border-radius:inherit; padding:1.5px; z-index:0;
-      background: conic-gradient(from var(--angle), transparent 0 62%, var(--accent) 78%, var(--accent-300) 88%, transparent 100%);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      animation: spin 6s linear infinite; pointer-events: none;
-    }
-    @keyframes spin { to { --angle: 360deg; } }
-    .pricing-inner { position: relative; z-index: 1; }
-    .pricing-glow {
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 80%; height: 200px; z-index: 0;
-      background: radial-gradient(ellipse at top, rgba(var(--accent-rgb),0.16), transparent 70%);
-      pointer-events: none;
-    }
-    .pricing-badge {
-      position:absolute; top:-13px; left:50%; transform:translateX(-50%); z-index: 2;
-      background:linear-gradient(180deg, var(--accent-300), var(--accent)); color:#04152e;
-      border-radius:999px; padding:5px 18px; font-size:11px; font-weight:700;
-      letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap;
-      box-shadow: 0 6px 18px -6px var(--accent-glow);
-    }
-    .pricing-label { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--muted); text-align:center; text-transform:uppercase; margin-bottom:24px; }
-    .pricing-price { text-align:center; margin-bottom:6px; display:flex; align-items:flex-start; justify-content:center; gap:3px; }
-    .p-cur { font-family:'Figtree',sans-serif; font-size:28px; font-weight:700; color:var(--muted); padding-top:12px; }
-    .p-amt { font-family:'Figtree',sans-serif; font-size:80px; font-weight:800; color:var(--text); line-height:1; letter-spacing:-0.04em; }
-    .p-per { font-size:15px; font-weight:300; color:var(--muted); align-self:flex-end; padding-bottom:10px; }
-    .pricing-desc { text-align:center; font-size:14px; font-weight:300; color:var(--muted); line-height:1.65; margin-bottom:32px; }
-    .pricing-feats { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
-    .pricing-feats li { display:flex; align-items:center; gap:12px; font-size:14px; font-weight:300; color:var(--text-dim); }
-    .pricing-feats li::before {
-      content:'✓'; color:var(--accent); font-size:10px; font-weight:700;
-      width:20px; height:20px; background:var(--accent-dim); border:1px solid var(--accent-border);
-      border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    }
-
-    /* ========================
-       GUARANTEE
-    ======================== */
-    .guarantee-box {
-      position: relative;
-      background:linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      border:1px solid var(--accent-border); border-radius:var(--radius-lg);
-      padding:56px 48px; max-width:780px; margin:0 auto; text-align:center; overflow: hidden;
-    }
-    .guarantee-box::after {
-      content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
-      width: 60%; height: 200px; background: radial-gradient(ellipse, rgba(var(--accent-rgb),0.12), transparent 70%);
-      pointer-events: none;
-    }
-    .guarantee-hl { font-family:'Figtree',sans-serif; font-size:clamp(22px,3vw,34px); font-weight:700; line-height:1.25; margin-bottom:20px; position: relative; }
-    .guarantee-body { font-size:17px; font-weight:300; color:var(--muted); line-height:1.75; max-width:520px; margin:0 auto 36px; position: relative; }
-    .guarantee-box .btn { position: relative; }
-
-    /* ========================
-       CALENDLY
-    ======================== */
-    .cal-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; max-width:1100px; margin:0 auto; align-items:start; }
-    .cal-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin-top:28px; }
-    .cal-list li { font-size:14px; font-weight:300; color:var(--muted); display:flex; align-items:center; gap:10px; }
-    .cal-list li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; }
-    .cal-shell {
-      min-width:300px; min-height:560px; border-radius:var(--radius);
-      border:1px solid var(--border); overflow:hidden;
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 18px; padding: 40px;
-    }
-    .cal-shell p { font-size: 14px; color: var(--muted); text-align: center; }
-    .cal-widget { width: 100%; height: 680px; border: 0; }
-
-    /* ========================
-       FAQ - native details
-    ======================== */
-    .faq-wrap { max-width:700px; margin:0 auto; display: flex; flex-direction: column; gap: 12px; }
-    .faq-item {
-      border:1px solid var(--border); border-radius:var(--radius);
-      background:rgba(255,255,255,0.02); overflow:hidden; transition: border-color 0.3s;
-    }
-    .faq-item[open] { border-color: var(--accent-border); }
-    .faq-item summary {
-      list-style:none; cursor:pointer; padding:22px 24px;
-      display:flex; justify-content:space-between; align-items:center; gap:16px;
-      font-size:15px; font-weight:400; color:var(--text); user-select:none;
-    }
-    .faq-item summary::-webkit-details-marker { display:none; }
-    .faq-item summary::after {
-      content:'+'; color:var(--accent); font-size:22px; font-weight:300; flex-shrink:0;
-      transition:transform 0.35s var(--ease);
-    }
-    .faq-item[open] summary::after { transform:rotate(45deg); }
-    .faq-a { padding:0 24px 24px; font-size:14px; font-weight:300; color:var(--muted); line-height:1.7; }
-
-    /* ========================
-       FINAL CTA
-    ======================== */
-    .final-glow {
-      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-      width:760px; height:380px;
-      background:radial-gradient(ellipse, rgba(var(--accent-rgb),0.09) 0%, transparent 68%);
-      pointer-events:none;
-    }
-
-    /* ========================
-       FOOTER
-    ======================== */
-    .footer {
-      border-top:1px solid var(--border); padding:48px clamp(24px,5vw,80px) 80px;
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;
-    }
-    .footer-logo { font-family:'Figtree',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.03em; }
-    .footer-logo span { color:var(--accent); letter-spacing:-0.03em; }
-    .footer-tagline { font-size:13px; font-weight:300; color:var(--muted); margin-top:6px; }
-    .footer-right { text-align:right; }
-    .footer-link { font-size:13px; color:var(--muted); text-decoration:none; transition:color 0.2s; }
-    .footer-link:hover { color:var(--text); }
-    .footer-copy { font-size:12px; color:var(--muted); margin-top:6px; }
-    .footer-writer-link { font-size:12px; color:var(--faint); margin-top:12px; }
-    .footer-writer-link a { color:var(--muted); text-decoration:none; transition:color 0.2s; }
-    .footer-writer-link a:hover { color:var(--accent); }
-
-    /* ========================
-       STICKY BOTTOM CTA
-    ======================== */
-    .sticky-bar {
-      position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99;
-      background: rgba(5,5,7,0.92);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid var(--border);
-      padding: 16px clamp(24px, 5vw, 80px);
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      transform: translateY(100%);
-      transition: transform 0.4s var(--ease);
-    }
-    .sticky-bar.visible { transform: translateY(0); }
-    .sticky-bar-text { font-size: 15px; font-weight: 400; color: var(--text-dim); white-space: nowrap; }
-    .sticky-bar-btn { padding: 10px 24px; font-size: 14px; }
-    @media (max-width: 560px) {
-      .sticky-bar { flex-direction: column; text-align: center; }
-      .sticky-bar-text { white-space: normal; font-size: 14px; }
-      .sticky-bar-btn { width: 100%; }
-    }
-
-    /* ========================
-       REVEAL ANIMATIONS (reveal-by-default, hide only when safe)
-    ======================== */
-    .js .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.75s var(--ease), transform 0.75s var(--ease); }
-    .js .reveal.visible { opacity:1; transform:translateY(0); }
-    .s1 { transition-delay:0.05s; }
-    .s2 { transition-delay:0.16s; }
-    .s3 { transition-delay:0.27s; }
-    .s4 { transition-delay:0.38s; }
-
-    /* ========================
-       PROOF OF WORK
-    ======================== */
-    .proof-blocks {
-      display: flex; flex-direction: column; gap: 72px;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .proof-label-row {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
-      margin-bottom: 18px;
-    }
-    .proof-client {
-      font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 600;
-      color: var(--text); letter-spacing: -0.01em;
-    }
-    .proof-niche {
-      font-size: 13px; font-weight: 300; color: var(--muted);
-    }
-    .proof-pill {
-      display: inline-flex; align-items: center;
-      background: rgba(var(--accent-rgb),0.06);
-      border: 1px solid var(--accent-border); border-radius: 999px;
-      padding: 5px 12px; font-size: 11px; font-weight: 500;
-      color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase;
-    }
-    .proof-stats {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px;
-    }
-    .proof-stat {
-      display: inline-flex; flex-direction: column; gap: 2px;
-      background: rgba(var(--accent-rgb),0.06);
-      border: 1px solid var(--accent-border); border-radius: 999px;
-      padding: 10px 16px; min-width: 0;
-    }
-    .proof-stat-val {
-      font-family: 'Figtree', sans-serif; font-size: 18px; font-weight: 700;
-      color: var(--accent); letter-spacing: -0.02em; line-height: 1.15;
-    }
-    .proof-stat-lbl {
-      font-size: 11px; font-weight: 400; color: var(--muted);
-      letter-spacing: 0.02em; text-transform: uppercase;
-    }
-    .proof-stat-sec {
-      display: flex; flex-wrap: wrap; gap: 8px 14px;
-      margin: -8px 0 20px; padding-left: 2px;
-    }
-    .proof-stat-sec span {
-      font-size: 12px; font-weight: 400; color: var(--faint);
-    }
-    .proof-note {
-      font-size: 13px; font-weight: 300; color: var(--muted);
-      margin: -6px 0 18px; font-style: normal;
-    }
-    .proof-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-      align-items: start;
-    }
-    .proof-shot {
-      position: relative; padding: 0; cursor: pointer;
-      border: 1px solid var(--border); border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      overflow: hidden; display: block; width: 100%;
-      text-align: left; color: inherit; font: inherit;
-      appearance: none; -webkit-appearance: none;
-      transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease,
-        box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .proof-shot:focus-visible {
-      outline: 2px solid var(--accent); outline-offset: 3px;
-    }
-    .proof-shot img {
-      display: block; width: 100%; height: auto;
-      vertical-align: middle; background: var(--bg-card);
-    }
-    .proof-cap {
-      display: block;
-      padding: 10px 12px;
-      border-top: 1px solid var(--border);
-      font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 400;
-      color: var(--muted); line-height: 1.35;
-    }
-    .proof-shot-lg { max-width: 920px; margin: 0 auto; }
-    .proof-row-caption {
-      margin-top: 16px; text-align: center;
-      font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.55;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .proof-shot.focused {
-        transform: scale(1.04); z-index: 3;
-        border-color: var(--accent-border);
-        box-shadow: 0 0 0 1px var(--accent-border), 0 16px 40px -12px var(--accent-glow);
-      }
-      .proof-shot.dimmed {
-        filter: blur(3px); opacity: 0.5;
-      }
-    }
-
-    /* Lightbox */
-    .proof-lb {
-      position: fixed; inset: 0; z-index: 10000;
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px; opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
-    }
-    .proof-lb.is-open {
-      opacity: 1; visibility: visible; pointer-events: auto;
-    }
-    .proof-lb-backdrop {
-      position: absolute; inset: 0;
-      background: rgba(5,5,7,0.88); backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .proof-lb-dialog {
-      position: relative; z-index: 1;
-      width: min(960px, 100%); max-height: min(92vh, 900px);
-      display: flex; flex-direction: column;
-      background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
-      border: 1px solid var(--border); border-radius: var(--radius-lg);
-      overflow: hidden; box-shadow: 0 32px 80px -20px rgba(0,0,0,0.65);
-    }
-    .proof-lb-img-wrap {
-      flex: 1 1 auto; overflow: auto; min-height: 0;
-      background: #000; display: flex; align-items: center; justify-content: center;
-    }
-    .proof-lb-img-wrap img {
-      display: block; max-width: 100%; max-height: min(72vh, 720px);
-      width: auto; height: auto; object-fit: contain;
-    }
-    .proof-lb-meta {
-      flex-shrink: 0; padding: 16px 20px 18px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-card);
-    }
-    .proof-lb-client {
-      font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px;
-    }
-    .proof-lb-range {
-      font-size: 12px; font-weight: 400; color: var(--muted); margin-bottom: 10px;
-    }
-    .proof-lb-stats {
-      font-size: 13px; font-weight: 400; color: var(--text-dim); line-height: 1.5;
-    }
-    .proof-lb-close {
-      position: absolute; top: 12px; right: 12px; z-index: 2;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid var(--border); background: rgba(11,11,21,0.85);
-      color: var(--text); font-size: 22px; line-height: 1; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .proof-lb-close:hover { border-color: var(--accent-border); background: var(--bg-card-2); }
-    .proof-lb-nav {
-      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 1px solid var(--border); background: rgba(11,11,21,0.85);
-      color: var(--text); font-size: 22px; cursor: pointer;
-      display: none; align-items: center; justify-content: center;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .proof-lb-nav.is-visible { display: flex; }
-    .proof-lb-nav:hover { border-color: var(--accent-border); background: var(--bg-card-2); }
-    .proof-lb-prev { left: 12px; }
-    .proof-lb-next { right: 12px; }
-    body.proof-lb-open { overflow: hidden; }
-
-    /* ========================
-       RESPONSIVE
-    ======================== */
-    @media (max-width:1100px) {
-      .hero-inner { grid-template-columns:1fr; justify-items:center; gap:40px; }
-      .hero-left { text-align:center; align-items:center; }
-      .hero-sub { max-width:560px; margin-left:auto; margin-right:auto; }
-      .hero-right { display:none; }
-      .hero-trust { justify-content:center; }
-    }
-    @media (max-width:768px) {
-      .nav-links { display:none; }
-      .nav-btn { display:none; }
-      .nav-burger { display:flex; }
-      .nav-mobile-menu { display:flex; }
-      .si { padding:72px 24px; }
-      .pain-grid { grid-template-columns:1fr; max-width:440px; margin:0 auto; }
-      .comp-grid { grid-template-columns:1fr; max-width:440px; margin:0 auto; }
-      .comp-col.bad { border-right:none; border-bottom:1px solid var(--border); }
-      .proof-row {
-        display: flex; overflow-x: auto; gap: 12px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px;
-      }
-      .proof-row .proof-shot {
-        flex: 0 0 min(85%, 320px); scroll-snap-align: start;
-      }
-      .proof-stat-val { font-size: 16px; }
-      .cal-grid { grid-template-columns:1fr; gap:40px; }
-      .pricing-card { padding:40px 28px; }
-      .guarantee-box { padding:40px 28px; }
-      .footer { flex-direction:column; align-items:flex-start; }
-      .footer-right { text-align:left; }
-      .timeline .t-step { position: relative; top: 0; box-shadow: none; margin-bottom: 16px; }
-      .t-step .step-num { font-size: 44px; }
-    }
-    @media (max-width:480px) {
-      .hero-heading { font-size:clamp(42px,12vw,58px); }
-      .hero-ctas .btn { width:100%; }
-      .hero-ctas { flex-direction:column; width:100%; }
-      .nav { top: 8px; width: calc(100% - 16px); }
-    }
-
-    /* ========================
-       REDUCED MOTION
-    ======================== */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-      }
-      .js .reveal { opacity:1 !important; transform:none !important; }
-      .hero-left > *, .hero-right { opacity:1 !important; }
-      .progress-bar { display:none; }
-      .ticker-track { animation: none !important; }
-    }
-
-    /* Conversion preview: buyer-first hero, inspectable client proof, one booking journey. */
-    .hero { min-height: auto; }
-    .hero-inner { grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr); gap: 56px; padding-top: 96px; padding-bottom: 76px; }
-    .hero-heading { font-size: clamp(46px, 5.1vw, 70px); line-height: 1.06; }
-    .hero-tag { font-size: 14px; letter-spacing: 0; padding: 8px 14px; }
-    .hero-sub { max-width: 560px; font-size: 18px; font-weight: 400; }
-    .hero-ctas { margin-bottom: 16px; }
-    .hero-call-note { font-size: 14px; line-height: 1.65; max-width: 440px; color: var(--muted); margin-bottom: 24px; }
-    .hero-trust { gap: 10px 18px; }
-    .trust-item { font-size: 14px; white-space: normal; }
-    .nav-btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-    #proof .si { padding-top: 72px; padding-bottom: 72px; }
-    #proof .s-intro { max-width: 760px; }
-    #proof .h-lg { font-size: clamp(36px,4vw,52px); }
-    .proof-blocks { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; }
-    .proof-block { min-width: 0; padding: 24px; border: 1px solid var(--border); border-radius: 20px; background: linear-gradient(160deg,var(--bg-card-2),var(--bg-card)); }
-    .proof-label-row { gap: 7px 10px; }
-    .proof-client { font-size: 16px; }
-    .proof-niche { font-size: 14px; }
-    .proof-pill { font-size: 12px; margin-top: 6px; }
-    .proof-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin-bottom: 20px; }
-    .proof-stat { border: none; border-radius: 10px; padding: 12px 8px; min-width: 0; }
-    .proof-stat-val { font-size: 20px; letter-spacing: -.03em; }
-    .proof-stat-lbl { font-size: 12px; line-height: 1.4; letter-spacing: 0; text-transform: none; }
-    .proof-stat-sec span { font-size: 12px; color: var(--muted); }
-    .proof-details { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 16px; }
-    .proof-details summary { color: var(--accent-300); font-size: 14px; line-height: 1.5; cursor: pointer; }
-    .proof-details[open] summary { margin-bottom: 16px; }
-    .proof-row { display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; }
-    .proof-shot-lg { max-width: 100%; }
-    .proof-cap { font-size: 13px; }
-    .proof-row-caption { font-size: 14px; text-align: left; }
-    .cal-copy { font-size: 18px; font-weight: 400; color: var(--text-dim); line-height: 1.7; margin-top: 20px; }
-    .cal-list li { font-size: 16px; line-height: 1.6; }
-    .cal-prep { font-size: 14px; line-height: 1.7; margin-top: 24px; color: var(--muted); }
-    .cal-grid { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 56px; }
-    .cal-shell { min-width: 0; min-height: 780px; padding: 0; gap: 0; justify-content: flex-start; }
-    .cal-shell [data-calendly-status] { padding: 24px; }
-    .cal-shell [hidden] { display: none; }
-    .cal-widget { display: block; height: 780px; flex: 0 0 auto; }
-    .cal-fallback { font-size: 14px; line-height: 1.6; color: var(--muted); text-align: center; margin-top: 16px; }
-    .cal-fallback a { color: var(--accent-300); text-underline-offset: 3px; }
-    .footer-writer-link { font-size: 14px; }
-    .sticky-bar:not(.visible) { visibility: hidden; }
-    @media (max-width: 1100px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 36px; padding-top: 76px; }
-      .hero-left { text-align: center; align-items: center; }
-      .hero-heading { font-size: clamp(46px,7vw,68px); }
-      .hero-right.hero-right-2card { display: block; width: min(100%,500px); text-align: left; }
-      .hero-call-note { max-width: 480px; }
-      .proof-blocks { grid-template-columns: 1fr; max-width: 720px; }
-      .proof-stat-val { font-size: 24px; }
-      .proof-row { grid-template-columns: repeat(3,minmax(0,1fr)); }
-      .proof-row .proof-shot { flex: initial; }
-    }
-    @media (max-width: 768px) {
-      .nav-btn { display: none; }
-      .hero-inner { padding: 60px 24px 56px; }
-      .hero-heading { font-size: clamp(42px,8vw,56px); }
-      .hero-tag { white-space: normal; text-align: center; }
-      .hero-sub { font-size: 17px; }
-      .cal-grid { grid-template-columns: 1fr; gap: 32px; }
-      .cal-shell, .cal-widget { min-height: 820px; height: 820px; }
-      .proof-block { padding: 24px; }
-      .proof-stats { gap: 10px; }
-      .proof-row { grid-template-columns: 1fr; }
-      .sticky-bar-text { display: none; }
-      .sticky-bar { padding: 12px 20px; }
-      .footer { padding-bottom: 96px; }
-    }
-    @media (max-width: 480px) {
-      .hero-heading { font-size: clamp(36px,9.7vw,46px); }
-      .hero-ctas { width: 100%; }
-      .proof-block { padding: 20px; }
-      .proof-stat-val { font-size: 20px; }
-      .hero-trust { gap: 10px 14px; }
-    }
-
-    /* Preview: hero report card, labels, reply-strategy path, buyer pain cards, featured case */
-    .hero-right-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px 4px; }
-    .ct-card-label { display: inline-block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-300); margin-bottom: 12px; }
-    .ct-media { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -4px 0 14px; padding: 14px; border: 1px dashed var(--accent-border); border-radius: 12px; background: rgba(var(--accent-rgb), .05); text-decoration: none; }
-    .ct-media-tag { font-size: 12px; color: var(--text-dim); }
-    .ct-media-cta { font-size: 12px; color: var(--accent-300); }
-    .ct-report-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-    .ct-report-tag { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-300); }
-    .ct-report-range { font-size: 12px; color: var(--muted); }
-        .ct-report-sub { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
-    .ct-report-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 14px; }
-    .ct-report-stats div { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid var(--accent-border); border-radius: 10px; background: rgba(var(--accent-rgb), .04); }
-    .ct-report-stats b { font-size: 20px; color: var(--accent); letter-spacing: -.02em; }
-    .ct-report-stats span { font-size: 12px; color: var(--text-dim); }
-    .ct-report-note { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
-
-    #strategy .si { padding-top: 56px; padding-bottom: 56px; }
-    .strategy-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
-    .strategy-flow span { padding: 6px 10px; border: 1px solid var(--accent-border); border-radius: 999px; background: rgba(var(--accent-rgb), .05); }
-    .strategy-flow i { font-style: normal; color: var(--accent); }
-    .samples-wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 40px; align-items: center; max-width: 1100px; margin: 0 auto; padding: 40px; border-color: var(--accent-border); }
-    .samples-body { font-size: 17px; line-height: 1.7; color: var(--text-dim); margin: 16px 0 20px; max-width: 560px; }
-    .samples-steps { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
-    .samples-steps li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; color: var(--text-dim); }
-    .samples-steps b { flex: 0 0 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: var(--accent); border: 1px solid var(--accent-border); }
-    .samples-actions { display: flex; flex-direction: column; gap: 14px; }
-    .samples-note { font-size: 14px; line-height: 1.6; color: var(--muted); margin: 0; }
-    .samples-alt { font-size: 14px; color: var(--accent-300); text-decoration: none; }
-    .samples-alt:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-    .pain-kicker { display: block; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,90,90,.75); margin-bottom: 12px; position: relative; }
-    .pain-title { font-size: 20px; line-height: 1.3; font-weight: 600; color: var(--text); margin: 0 0 10px; position: relative; }
-    .pain-card .pain-text { margin-bottom: 0; }
-
-    #proof .proof-case.proof-case-featured { grid-column: 1 / -1; min-height: 0; border-color: var(--accent-border); }
-    .proof-featured-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 28px; align-items: start; }
-    .proof-case .proof-niche a { color: var(--accent-300); text-decoration: none; }
-    .proof-case .proof-comparison.proof-single th:first-child { width: 70%; }
-    #proof .proof-case-featured .proof-details .proof-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    #proof .proof-case-featured .proof-comparison th:first-child { width: 31%; }
-
-    @media (max-width: 1000px) {
-      .proof-featured-grid { grid-template-columns: 1fr; gap: 18px; }
-      #proof .proof-case-featured .proof-details .proof-row { grid-template-columns: 1fr; }
-      #proof .proof-case-featured .proof-comparison th:first-child { width: 37%; }
-      .samples-wrap { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
-    }
-    @media (max-width: 520px) {
-      .ct-report-stats b { font-size: 17px; }
-      .samples-wrap { padding: 22px; }
-    }
-
-  </style>
-  <link rel="stylesheet" href="case-study-template.css">
-  <style>
-    /* Proposed: hero link, compact secondary cases, included + guarantee pair */
-    .hero-right-more { display: inline-block; margin: 14px 0 0 4px; font-size: 14px; color: var(--accent-300); text-decoration: none; }
-    .hero-right-more:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-    #proof .proof-more { grid-column: 1 / -1; min-width: 0; }
-    .proof-more-title { display: flex; justify-content: space-between; align-items: center; margin: 12px 2px 14px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-    .proof-more-title span { display: none; color: var(--accent-300); letter-spacing: .06em; }
-    #proof .proof-more-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
-
-    .offer-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 24px; max-width: 1000px; margin: 0 auto; align-items: stretch; }
-    .offer-grid .pricing-wrap { max-width: none; margin: 0; display: flex; }
-    .offer-grid .pricing-card { flex: 1; }
-    .guarantee-card { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 44px 40px; border: 1px solid var(--accent-border); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card)); overflow: hidden; }
-    .guarantee-card::after { content: ''; position: absolute; top: -30%; left: 50%; transform: translateX(-50%); width: 80%; height: 220px; background: radial-gradient(ellipse, rgba(var(--accent-rgb), .12), transparent 70%); pointer-events: none; }
-    .guarantee-card-title { position: relative; font-size: clamp(28px, 3vw, 38px); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 18px; }
-    .guarantee-card p { position: relative; font-size: 17px; line-height: 1.7; color: var(--text-dim); margin: 0 0 14px; }
-    .guarantee-card .guarantee-card-note { font-size: 14px; color: var(--muted); margin: 0; }
-    .cal-prep a { color: var(--accent-300); text-underline-offset: 3px; }
-
-    @media (max-width: 1000px) {
-      #proof .proof-more-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 860px) {
-      .offer-grid { grid-template-columns: 1fr; max-width: 520px; }
-    }
-    @media (max-width: 768px) {
-      #proof .proof-more-row { display: flex; overflow-x: auto; gap: 12px; scroll-snap-type: x mandatory; margin: 0 -24px; padding: 0 24px 10px; scroll-padding-left: 24px; align-items: flex-start; }
-      #proof .proof-more-row > .proof-case { flex: 0 0 86%; scroll-snap-align: start; }
-      .proof-more-title span { display: inline; }
-      .guarantee-card { padding: 36px 28px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400..700&family=JetBrains+Mono:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css?v=2.0">
+  <script>
+    /* Turn on scripted styles early. If site.js never arrives, show everything anyway. */
+    document.documentElement.classList.add('js');
+    setTimeout(function () {
+      if (!window.R3PLY_READY) document.documentElement.classList.add('reveal-all');
+    }, 3000);
+  </script>
 </head>
-<body>
+<body id="top">
 
-  <a href="#proof" class="skip-link">Skip to content</a>
-  <div class="progress-bar" aria-hidden="true"></div>
+  <!-- Icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5L9 7M2.5 13.5L7 9"/></symbol>
+    <symbol id="i-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol>
+    <symbol id="i-left" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></symbol>
+    <symbol id="i-right" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
+  </svg>
 
-  <!-- NAVBAR -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="#home" class="nav-logo">R<span>3</span>PLY</a>
-      <div class="nav-links">
+  <a href="#proof" class="skip-link">Skip to results</a>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-in">
+      <a href="#top" class="logo" aria-label="R3PLY, back to top">R<span>3</span>PLY</a>
+      <nav class="nav-links" aria-label="Primary">
         <a href="#proof">Results</a>
-        <a href="#process">Process</a>
-        <a href="#pricing">What&rsquo;s included</a>
+        <a href="#why">Why replies</a>
+        <a href="#process">How it works</a>
+        <a href="#pricing">What’s included</a>
         <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-right">
+        <a href="#calendly" data-book-call class="btn btn-primary btn-sm">Book my free X audit</a>
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-sheet">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <a href="#calendly" data-book-call class="nav-btn">Book my free X audit</a>
-      <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
-    <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <div class="nav-sheet" id="nav-sheet" hidden>
       <a href="#proof">Results</a>
-      <a href="#process">Process</a>
-      <a href="#pricing">What&rsquo;s included</a>
+      <a href="#why">Why replies</a>
+      <a href="#process">How it works</a>
+      <a href="#pricing">What’s included</a>
       <a href="#faq">FAQ</a>
-      <a href="#calendly" data-book-call class="btn btn-blue btn-full">Book my free X audit</a>
+      <a href="#calendly" data-book-call class="btn btn-primary btn-block">Book my free X audit</a>
     </div>
-  </nav>
+    <span class="nav-progress" aria-hidden="true"></span>
+  </header>
 
   <!-- HERO -->
-  <header class="hero" id="home">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
-    <div class="hero-glow"></div>
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-tag">
-          For Web3 teams and founders on X
-        </div>
-        <h1 class="hero-heading">Stay visible to the<br>right people on X.<br><em>Keep building.</em></h1>
-        <p class="hero-sub">Human-written replies from your project account, your founder account, or both, in the conversations your audience already lives in. We handle the strategy, execution and weekly reporting.</p>
-        <div class="hero-ctas">
-          <a href="#calendly" data-book-call class="btn btn-blue magnetic">Book my free X audit</a>
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hero-tag reveal"><i></i>For Web3 teams and founders on X</p>
+        <h1 class="h1 reveal" style="--d:.06s"><span class="ln">Stay visible to the</span> <span class="ln">right people on X.</span> <span class="hl">Keep building.</span></h1>
+        <p class="hero-sub reveal" style="--d:.12s">Human-written replies from your project account, your founder account, or both, in the conversations your audience already lives in. We handle the strategy, execution and weekly reporting.</p>
+        <div class="hero-ctas reveal" style="--d:.18s">
+          <a href="#calendly" data-book-call class="btn btn-primary">Book my free X audit <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a href="#strategy" class="btn btn-ghost">Get your reply strategy</a>
         </div>
-        <p class="hero-call-note">Not ready for a call? Get a written reply strategy for your account first. No account access, no payment.</p>
-        <div class="hero-trust">
-          <span class="trust-item">Human-written replies</span>
-          <span class="trust-item">Posted via X Delegate, no passwords</span>
-          <span class="trust-item">30-day money-back guarantee</span>
-        </div>
+        <p class="hero-note reveal" style="--d:.22s">Not ready for a call? Get a written reply strategy for your account first. No account access, no payment.</p>
+        <ul class="trust reveal" style="--d:.28s">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Human-written replies</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Posted via X Delegate, no passwords</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>30-day money-back guarantee</li>
+        </ul>
       </div>
 
-      <div class="hero-right hero-right-2card">
-        <p class="hero-right-label">From client accounts</p>
-        <div class="ct-card ct-report" data-tilt>
-          <span class="spotlight"></span>
-          <div class="ct-report-top">
-            <span class="ct-report-tag">Project account &middot; ongoing</span>
-            <span class="ct-report-range">Sep 25 - Nov 4, 2026</span>
+      <!-- The statement: all six client accounts at a glance. Each line opens its case below. -->
+      <aside class="printer" id="printer" aria-labelledby="statement-title">
+        <div class="printer-slot" aria-hidden="true"><span class="printer-label">Proof of work</span><span class="printer-led"></span></div>
+        <div class="printer-feed">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <p class="rc-brand">R<span>3</span>PLY</p>
+              <p class="rc-meta" id="statement-title">Client results statement</p>
+              <p class="rc-meta">6 accounts &middot; Feb - Nov 2026</p>
+              <hr class="rc-rule">
+              <div class="st-head"><span>Account</span><span>Impressions</span></div>
+              <ol class="st-lines">
+                <li><a href="#case-multipli"><span class="st-no">01</span><span class="st-name">Multipli Intern<small>B2B DeFi &middot; Sep 25 - Nov 4</small></span><span class="st-amt">319.7K</span></a></li>
+                <li><a href="#case-pb8k"><span class="st-no">02</span><span class="st-name">Personal brand, 8K followers<small>Name withheld &middot; Oct 14 - Nov 1</small></span><span class="st-amt">314.4K</span></a></li>
+                <li><a href="#case-prediction-markets"><span class="st-no">03</span><span class="st-name">Prediction markets brand<small>Name withheld &middot; 8.2× baseline week</small></span><span class="st-amt">84K</span></a></li>
+                <li><a href="#case-web3-brand"><span class="st-no">04</span><span class="st-name">Web3 personal brand<small>Name withheld &middot; Jun 1 - Jul 18</small></span><span class="st-amt">514.1K</span></a></li>
+                <li><a href="#case-gaming"><span class="st-no">05</span><span class="st-name">Web3 gaming project<small>Name withheld &middot; May 3-24</small></span><span class="st-amt">209.6K</span></a></li>
+                <li><a href="#case-injective"><span class="st-no">06</span><span class="st-name">Injective Lounge<small>Community &middot; 3 periods, Feb - Mar</small></span><span class="st-amt">476.9K</span></a></li>
+              </ol>
+              <hr class="rc-rule rc-rule--double">
+              <!-- Sum of the six lines above: 319.7 + 314.4 + 84 + 514.1 + 209.6 + 476.9 = 1,918.7K -->
+              <div class="st-total"><span>Total recorded</span><strong><mark>1.9M</mark></strong></div>
+              <p class="st-fine">Account-wide impressions in the tracked windows, added up from the original X analytics screenshots below. Windows differ per account.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="st-foot"><span>13 original screenshots</span><a href="#proof">Open the receipts &darr;</a></p>
+            </div>
           </div>
-          <div class="ct-head">
-            <div class="ct-avatar img-avatar"><img src="assets/avatar-multipli.png" alt="Multipli Intern"></div>
-            <div class="ct-meta"><div class="ct-name">Multipli Intern</div><div class="ct-handle">@intern_multipli</div></div>
-            <a href="https://x.com/intern_multipli" target="_blank" rel="noopener" class="ct-x-link" aria-label="Multipli Intern on X"><svg class="ct-x-icon" width="18" height="18" viewBox="0 0 24 24" fill="var(--accent)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.737-8.852L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          </div>
-          <div class="ct-report-sub">B2B DeFi protocol &middot; intern account</div>
-          <div class="ct-report-stats">
-            <div><b>319.7K</b><span>impressions</span></div>
-            <div><b>909</b><span>profile visits</span></div>
-            <div><b>2.8K</b><span>engagements</span></div>
-          </div>
-          <p class="ct-report-note">248.8K of those impressions came in the last month. Daily quality checks and a weekly analytics report, run through X Delegate.</p>
         </div>
-        <div class="ct-card ct-report" data-tilt>
-          <span class="spotlight"></span>
-          <div class="ct-report-top">
-            <span class="ct-report-tag">Personal account &middot; trial week</span>
-            <span class="ct-report-range">Oct 14-21, 2026</span>
-          </div>
-          <div class="ct-head">
-            <div class="ct-avatar blue" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8z"/></svg></div>
-            <div class="ct-meta"><div class="ct-name">Personal brand</div><div class="ct-handle">8K followers &middot; name withheld</div></div>
-          </div>
-          <div class="ct-report-stats">
-            <div><b>211</b><span>replies we posted</span></div>
-            <div><b>84K</b><span>impressions on them</span></div>
-            <div><b>+371%</b><span>account impressions</span></div>
-          </div>
-          <p class="ct-report-note">About 30 replies a day. Profile visits rose 115% and new follows 94% in the same week.</p>
-        </div>
-        <a href="#proof" class="hero-right-more">See the analytics for all six accounts &darr;</a>
-      </div>
+      </aside>
     </div>
-  </header>
+  </section>
 
   <main>
 
   <!-- PROOF OF WORK -->
-  <section class="sw sw-alt" id="proof" aria-labelledby="proof-title">
-    <div class="si">
-      <div class="s-intro">
-        <span class="eyebrow reveal">PROOF OF WORK</span>
-        <h2 class="h-lg reveal" id="proof-title">Client work.<br><em class="accent">Numbers you can inspect.</em></h2>
-        <p class="s-body reveal">Six client accounts, each with original screenshots from X analytics. These are account-wide results from the periods shown, not a promise of identical growth.</p>
+  <section class="sec proof" id="proof" aria-labelledby="proof-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker reveal">Proof of work</p>
+          <h2 class="h2 reveal" id="proof-title">Receipts, <span class="hl">not promises.</span></h2>
+        </div>
+        <p class="lead reveal" style="--d:.08s">Six client accounts, each with original screenshots from X analytics. Pick an account, read the receipt, then open the screenshot it came from. These are account-wide results from the periods shown, not a promise of identical growth.</p>
       </div>
 
-      <div class="proof-blocks">
-<article class="proof-block proof-case proof-case-featured" aria-labelledby="case-multipli">
-          <div class="proof-featured-grid">
-            <div class="proof-featured-main">
-              <div class="proof-label-row">
-                <h3 class="proof-client" id="case-multipli">Multipli Intern</h3>
-                <span class="proof-niche">B2B DeFi protocol &middot; dedicated intern account <a href="https://x.com/intern_multipli" target="_blank" rel="noopener">@intern_multipli</a></span>
-              </div>
-              <div class="proof-case-meta">
-                <span class="proof-pill">Latest case &middot; ongoing</span>
-                <p class="proof-period">Sep 25 - Nov 4, 2026</p>
-              </div>
-              <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">319.7K</span><span class="proof-stat-lbl">Impressions</span></div>
-<div class="proof-stat"><span class="proof-stat-val">909</span><span class="proof-stat-lbl">Profile visits</span></div>
-<div class="proof-stat"><span class="proof-stat-val">2.8K</span><span class="proof-stat-lbl">Engagements</span></div></div>
-              <p class="proof-description">Reply presence for the intern account of Multipli, a DeFi protocol that reported reaching $500M in TVL in September 2026. Week 1: 340 replies delivered, about 49 a day against a 50-a-day plan. The last month alone (Oct 4 - Nov 4) brought 248.8K impressions and 723 profile visits.</p>
+      <div class="case-tabs" role="tablist" aria-label="Client accounts" id="case-tabs">
+        <a class="case-tab" role="tab" id="tab-multipli" href="#case-multipli" aria-controls="case-multipli" aria-selected="true">
+          <span class="case-tab-top"><span>01</span><span>Project</span></span>
+          <span class="case-tab-name">Multipli Intern</span>
+          <span class="case-tab-num">319.7K</span>
+          <span class="case-tab-lbl">impressions, ongoing</span>
+        </a>
+        <a class="case-tab" role="tab" id="tab-pb8k" href="#case-pb8k" aria-controls="case-pb8k" aria-selected="false">
+          <span class="case-tab-top"><span>02</span><span>Personal</span></span>
+          <span class="case-tab-name">Personal brand, 8K followers</span>
+          <span class="case-tab-num">314.4K</span>
+          <span class="case-tab-lbl">impressions in 19 days</span>
+        </a>
+        <a class="case-tab" role="tab" id="tab-prediction-markets" href="#case-prediction-markets" aria-controls="case-prediction-markets" aria-selected="false">
+          <span class="case-tab-top"><span>03</span><span>Personal</span></span>
+          <span class="case-tab-name">Prediction markets brand</span>
+          <span class="case-tab-num">8.2×</span>
+          <span class="case-tab-lbl">impressions vs baseline week</span>
+        </a>
+        <a class="case-tab" role="tab" id="tab-web3-brand" href="#case-web3-brand" aria-controls="case-web3-brand" aria-selected="false">
+          <span class="case-tab-top"><span>04</span><span>Personal</span></span>
+          <span class="case-tab-name">Web3 personal brand</span>
+          <span class="case-tab-num">514.1K</span>
+          <span class="case-tab-lbl">impressions in 7 weeks</span>
+        </a>
+        <a class="case-tab" role="tab" id="tab-gaming" href="#case-gaming" aria-controls="case-gaming" aria-selected="false">
+          <span class="case-tab-top"><span>05</span><span>Project</span></span>
+          <span class="case-tab-name">Web3 gaming project</span>
+          <span class="case-tab-num">209.6K</span>
+          <span class="case-tab-lbl">impressions in 3 weeks</span>
+        </a>
+        <a class="case-tab" role="tab" id="tab-injective" href="#case-injective" aria-controls="case-injective" aria-selected="false">
+          <span class="case-tab-top"><span>06</span><span>Community</span></span>
+          <span class="case-tab-name">Injective Lounge</span>
+          <span class="case-tab-num">198.2K</span>
+          <span class="case-tab-lbl">peak of 3 measured periods</span>
+        </a>
+      </div>
+
+      <!-- ================= CASE 01: MULTIPLI INTERN ================= -->
+      <article class="case is-active" id="case-multipli" role="tabpanel" aria-labelledby="tab-multipli" data-case="Multipli Intern · B2B DeFi">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 01 / 06</span><span>Project account</span><span>Ongoing</span></p>
+            <h3 class="case-title"><img src="assets/avatar-multipli.png" alt="" width="44" height="44">Multipli Intern</h3>
+            <p class="case-sub">B2B DeFi protocol &middot; dedicated intern account <a class="link" href="https://x.com/intern_multipli" target="_blank" rel="noopener">@intern_multipli</a></p>
+          </div>
+          <div class="views-wrap">
+            <span class="views-lbl" id="views-multipli">Tracking window</span>
+            <div class="views" role="group" aria-labelledby="views-multipli">
+              <button type="button" data-view-btn="alltime" aria-pressed="true">All time so far</button>
+              <button type="button" data-view-btn="month" aria-pressed="false">Last month</button>
+              <button type="button" data-view-btn="week1" aria-pressed="false">Week 1</button>
             </div>
-            <div class="proof-row proof-featured-shot" data-proof-row><button type="button" class="proof-shot glass-card"
-              data-group="multipli" data-index="0"
-              data-client="Multipli Intern &middot; B2B DeFi"
-              data-range="All time so far &middot; Sep 25 - Nov 4, 2026"
-              data-stats="319.7K impressions &middot; 909 profile visits &middot; 2.8K engagements &middot; 1.5K likes"
-              aria-label="Open Multipli Intern all-time analytics screenshot, Sep 25 to Nov 4, 2026">
-              <img src="assets/proof-multipli-alltime.jpg" alt="Multipli Intern X analytics, Sep 25 to Nov 4, 2026: 319.7K impressions, 909 profile visits, 2.8K engagements" loading="lazy" width="1416" height="967">
-              <span class="proof-cap">All time so far &middot; Sep 25 - Nov 4, 2026</span>
-            </button></div>
           </div>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Account-wide X analytics for three windows on the same account: all time so far (Sep 25 - Nov 4), the last month (Oct 4 - Nov 4) and the Week 1 report (Sep 25 - Oct 1, 2026). The &ldquo;Replies&rdquo; metric in X analytics counts replies the account received, separate from the replies our team posted (340 in Week 1). X compares each window with the period before it, so the percentages in each screenshot differ. The TVL figure describes the client protocol, not a result of our replies.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card"
-              data-group="multipli" data-index="1"
-              data-client="Multipli Intern &middot; B2B DeFi"
-              data-range="Last month &middot; Oct 4 - Nov 4, 2026"
-              data-stats="248.8K impressions &middot; 723 profile visits &middot; 2.2K engagements &middot; 1.2K likes"
-              aria-label="Open Multipli Intern last-month analytics screenshot, Oct 4 to Nov 4, 2026">
-              <img src="assets/proof-multipli-lastmonth.jpg" alt="Multipli Intern X analytics, Oct 4 to Nov 4, 2026: 248.8K impressions, 723 profile visits, 2.2K engagements" loading="lazy" width="1451" height="966">
-              <span class="proof-cap">Last month &middot; Oct 4 - Nov 4, 2026</span>
-            </button><button type="button" class="proof-shot glass-card"
-              data-group="multipli" data-index="2"
-              data-client="Multipli Intern &middot; B2B DeFi"
-              data-range="Week 1 &middot; Sep 25 - Oct 1, 2026"
-              data-stats="340 replies delivered &middot; 51.9K impressions &middot; 139 profile visits &middot; 478 engagements"
-              aria-label="Open Multipli Intern Week 1 analytics screenshot, Sep 25 to Oct 1, 2026">
-              <img src="assets/proof-multipli-week1.jpg" alt="Multipli Intern X analytics, Sep 25 to Oct 1, 2026: 51.9K impressions, 139 profile visits, 478 engagements" loading="lazy" width="1276" height="993">
-              <span class="proof-cap">Week 1 &middot; Sep 25 - Oct 1, 2026</span>
-            </button></div>
-            <h4 class="proof-expanded-heading">All tracked metrics</h4>
-            <table class="proof-comparison" aria-label="Multipli Intern metrics for Week 1, the last month and all time so far">
-              <thead><tr><th scope="col">Metric</th><th scope="col">Week 1</th><th scope="col">Last month</th><th scope="col">All time so far</th></tr></thead>
-              <tbody><tr><th scope="row">Impressions</th><td>51.9K</td><td>248.8K</td><td>319.7K</td></tr>
-<tr><th scope="row">Profile visits</th><td>139</td><td>723</td><td>909</td></tr>
-<tr><th scope="row">Engagements</th><td>478</td><td>2.2K</td><td>2.8K</td></tr>
-<tr><th scope="row">Likes</th><td>272</td><td>1.2K</td><td>1.5K</td></tr>
-<tr><th scope="row">Replies (X analytics)</th><td>53</td><td>212</td><td>282</td></tr>
-<tr><th scope="row">Reposts</th><td>7</td><td>10</td><td>17</td></tr>
-<tr><th scope="row">Bookmarks</th><td>6</td><td>23</td><td>30</td></tr>
-<tr><th scope="row">Shares</th><td>1</td><td>1</td><td>2</td></tr>
-<tr class="proof-rate"><th scope="row">Engagement rate</th><td>0.9%</td><td>0.8%</td><td>0.8%</td></tr></tbody>
-            </table>
-          </details>
-        </article>
+        </header>
 
-<article class="proof-block proof-case proof-case-featured" aria-labelledby="case-pb8k">
-          <div class="proof-featured-grid">
-            <div class="proof-featured-main">
-              <div class="proof-label-row">
-                <h3 class="proof-client" id="case-pb8k">Personal brand</h3>
-                <span class="proof-niche">8K followers &middot; identity kept private</span>
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <span class="stamp" aria-hidden="true">Ongoing</span>
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 01 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Multipli Intern</p>
+              <p class="rc-desc">B2B DeFi protocol, intern account</p>
+              <hr class="rc-rule">
+
+              <div class="rc-swap" data-view="alltime">
+                <p class="rc-period"><span>All time so far</span><span>Sep 25 - Nov 4, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>319.7K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta up">+188%</span><br>vs prior period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits <span class="delta up">+188%</span></dt><dd>909</dd></div>
+                  <div class="is-strong"><dt>Engagements <span class="delta up">+158%</span></dt><dd>2.8K</dd></div>
+                  <div><dt>Likes</dt><dd>1.5K</dd></div>
+                  <div><dt>Replies (X analytics)</dt><dd>282</dd></div>
+                  <div><dt>Reposts</dt><dd>17</dd></div>
+                  <div><dt>Bookmarks</dt><dd>30</dd></div>
+                  <div><dt>Shares</dt><dd>2</dd></div>
+                  <div><dt>Engagement rate</dt><dd>0.8%</dd></div>
+                </dl>
               </div>
-              <div class="proof-case-meta">
-                <span class="proof-pill">Trial week + week 2</span>
-                <p class="proof-period">Oct 14 - Nov 1, 2026</p>
+
+              <div class="rc-swap" data-view="month" hidden>
+                <p class="rc-period"><span>Last month</span><span>Oct 4 - Nov 4, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>248.8K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta up">+72%</span><br>vs prior period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits <span class="delta up">+92%</span></dt><dd>723</dd></div>
+                  <div class="is-strong"><dt>Engagements <span class="delta up">+69%</span></dt><dd>2.2K</dd></div>
+                  <div><dt>Likes <span class="delta up">+65%</span></dt><dd>1.2K</dd></div>
+                  <div><dt>Replies (X analytics) <span class="delta up">+55%</span></dt><dd>212</dd></div>
+                  <div><dt>Reposts</dt><dd>10</dd></div>
+                  <div><dt>Bookmarks <span class="delta up">+35%</span></dt><dd>23</dd></div>
+                  <div><dt>Shares</dt><dd>1</dd></div>
+                  <div><dt>Engagement rate</dt><dd>0.8%</dd></div>
+                </dl>
               </div>
-              <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">211</span><span class="proof-stat-lbl">Replies in the trial week</span></div>
-<div class="proof-stat"><span class="proof-stat-val">84K</span><span class="proof-stat-lbl">Impressions from those replies</span></div>
-<div class="proof-stat"><span class="proof-stat-val">113.9K</span><span class="proof-stat-lbl">Account impressions, up 371%</span></div></div>
-              <p class="proof-description">Trial week: 211 replies, about 30 a day. The replies alone recorded 84K impressions, out of 113.9K for the whole account. Profile visits rose 115% to 506, new follows 94% to 70 and likes 120% to 956. Week 2 followed with 157.8K impressions, 460 profile visits and 74 new follows.</p>
+
+              <div class="rc-swap" data-view="week1" hidden>
+                <p class="rc-period"><span>Week 1</span><span>Sep 25 - Oct 1, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>51.9K</mark></strong>
+                  <span class="rc-lead-side">first 7 days<br>of the work</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>139</dd></div>
+                  <div class="is-strong"><dt>Engagements</dt><dd>478</dd></div>
+                  <div><dt>Likes</dt><dd>272</dd></div>
+                  <div><dt>Replies (X analytics)</dt><dd>53</dd></div>
+                  <div><dt>Reposts</dt><dd>7</dd></div>
+                  <div><dt>Bookmarks</dt><dd>6</dd></div>
+                  <div><dt>Shares</dt><dd>1</dd></div>
+                  <div><dt>Engagement rate</dt><dd>0.9%</dd></div>
+                </dl>
+              </div>
+
+              <hr class="rc-rule">
+              <p class="rc-sec">Delivery, week 1</p>
+              <dl class="rc-lines">
+                <div class="is-strong"><dt>Replies we posted</dt><dd>340</dd></div>
+                <div><dt>Average per day</dt><dd>49</dd></div>
+                <div><dt>Planned per day</dt><dd>50</dd></div>
+              </dl>
+              <hr class="rc-rule">
+              <p class="rc-fine">Account-wide X analytics. “Replies (X analytics)” counts replies the account received, not the replies our team posted. Nov 4 is a partial day.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 3 original screenshots</p>
             </div>
-            <div class="proof-row proof-featured-shot" data-proof-row><button type="button" class="proof-shot glass-card"
-              data-group="pb8k" data-index="0"
-              data-client="Personal Brand &middot; 8K followers"
-              data-range="Trial week &middot; Oct 14-21, 2026"
-              data-stats="113.9K impressions &middot; 506 profile visits &middot; 70 new follows &middot; 956 likes"
-              aria-label="Open personal brand trial week analytics screenshot, Oct 14 to 21, 2026">
-              <img src="assets/proof-pb8k-trial.jpg" alt="Personal brand X analytics, Oct 14 to 21, 2026: 113.9K impressions, 506 profile visits, 70 new follows" loading="lazy" width="1069" height="966">
-              <span class="proof-cap">Trial week &middot; Oct 14-21, 2026</span>
-            </button></div>
           </div>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Account-wide X analytics. Trial week: Oct 14-21. Week 2: Oct 25-31. The third screenshot covers the full window, Oct 14 - Nov 1, 2026, so it also includes Oct 22-24 and Nov 1. The two tracked weeks alone add up to 271.7K impressions, 966 profile visits and 144 new follows. The 84K figure covers the 211 replies posted in the trial week; the screenshot shows the 113.9K account total. The &ldquo;Replies&rdquo; metric in X analytics counts replies the account received, separate from the replies our team posted.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card"
-              data-group="pb8k" data-index="1"
-              data-client="Personal Brand &middot; 8K followers"
-              data-range="Week 2 &middot; Oct 25-31, 2026"
-              data-stats="157.8K impressions &middot; 460 profile visits &middot; 74 new follows &middot; 727 likes"
-              aria-label="Open personal brand week 2 analytics screenshot, Oct 25 to 31, 2026">
-              <img src="assets/proof-pb8k-week2.jpg" alt="Personal brand X analytics, Oct 25 to 31, 2026: 157.8K impressions, 460 profile visits, 74 new follows" loading="lazy" width="1280" height="1074">
-              <span class="proof-cap">Week 2 &middot; Oct 25-31, 2026</span>
-            </button><button type="button" class="proof-shot glass-card"
-              data-group="pb8k" data-index="2"
-              data-client="Personal Brand &middot; 8K followers"
-              data-range="Full window &middot; Oct 14 - Nov 1, 2026"
-              data-stats="314.4K impressions &middot; 1.1K profile visits &middot; 171 new follows &middot; 2K likes"
-              aria-label="Open personal brand full-window analytics screenshot, Oct 14 to Nov 1, 2026">
-              <img src="assets/proof-pb8k-full.jpg" alt="Personal brand X analytics, Oct 14 to Nov 1, 2026: 314.4K impressions, 1.1K profile visits, 171 new follows" loading="lazy" width="1077" height="962">
-              <span class="proof-cap">Full window &middot; Oct 14 - Nov 1, 2026</span>
-            </button></div>
-            <h4 class="proof-expanded-heading">All tracked metrics</h4>
-            <table class="proof-comparison" aria-label="Personal brand metrics for the trial week, week 2 and the full window">
-              <thead><tr><th scope="col">Metric</th><th scope="col">Trial week</th><th scope="col">Week 2</th><th scope="col">Oct 14 - Nov 1</th></tr></thead>
-              <tbody><tr><th scope="row">Impressions</th><td>113.9K</td><td>157.8K</td><td>314.4K</td></tr>
-<tr><th scope="row">Profile visits</th><td>506</td><td>460</td><td>1.1K</td></tr>
-<tr><th scope="row">New follows</th><td>70</td><td>74</td><td>171</td></tr>
-<tr><th scope="row">Likes</th><td>956</td><td>727</td><td>2K</td></tr>
-<tr><th scope="row">Replies (X analytics)</th><td>299</td><td>214</td><td>572</td></tr>
-<tr><th scope="row">Reposts</th><td>7</td><td>19</td><td>29</td></tr>
-<tr><th scope="row">Bookmarks</th><td>16</td><td>52</td><td>89</td></tr>
-<tr><th scope="row">Shares</th><td>0</td><td>7</td><td>7</td></tr>
-<tr class="proof-rate"><th scope="row">Engagement rate</th><td>2.2%</td><td>1.8%</td><td>2%</td></tr></tbody>
-            </table>
-          </details>
-        </article>
 
-<div class="proof-more">
-<p class="proof-more-title">More client accounts <span aria-hidden="true">Swipe &rarr;</span></p>
-<div class="proof-more-row">
-<article class="proof-block proof-case" aria-labelledby="case-polymarket">
-          <div class="proof-label-row">
-            <h3 class="proof-client" id="case-polymarket">Prediction markets personal brand</h3>
-            <span class="proof-niche">Name withheld</span>
-          </div>
-          <div class="proof-case-meta">
-            <span class="proof-pill">1 week tracked</span>
-            <p class="proof-period">Sep 26 - Oct 2, 2026</p>
-          </div>
-          <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">84K</span><span class="proof-stat-lbl">Impressions</span></div>
-<div class="proof-stat"><span class="proof-stat-val">207</span><span class="proof-stat-lbl">Profile visits</span></div>
-<div class="proof-stat"><span class="proof-stat-val">1.5K</span><span class="proof-stat-lbl">Engagements</span></div></div>
-          <p class="proof-description">8.2× impressions, 4.7× profile visits, and 4.8× engagements versus the baseline screenshot.</p>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Baseline: Sep 20-26. Trial: Sep 26 - Oct 2, 2026. The windows share Sep 26. Multiples are approximate because X rounds larger totals. Engagement rate moved from 3% to 1.8%.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card" data-group="polymarket" data-index="0" data-client="Prediction markets personal brand" data-range="Baseline screenshot · Sep 20-26, 2026" data-stats="10.3K impressions · 44 profile visits · 312 engagements · 3% engagement rate" aria-label="Open original Prediction Markets Niche baseline analytics screenshot, September 20 to 26, 2026">
-                <img src="assets/polymarket-before.png" alt="Original baseline X analytics for September 20-26, 2026: 10.3K impressions, 44 profile visits and 312 engagements" loading="lazy" width="1246" height="1000">
-                <span class="proof-cap">Baseline · Sep 20-26, 2026</span>
-              </button><button type="button" class="proof-shot glass-card" data-group="polymarket" data-index="1" data-client="Prediction markets personal brand" data-range="Trial screenshot · Sep 26 - Oct 2, 2026" data-stats="84K impressions · 207 profile visits · 1.5K engagements · 1.8% engagement rate" aria-label="Open original Prediction Markets Niche trial analytics screenshot, September 26 to October 2, 2026">
-                <img src="assets/polymarket-after.png" alt="Original trial X analytics for September 26 - October 2, 2026: 84K impressions, 207 profile visits and 1.5K engagements" loading="lazy" width="1256" height="994">
-                <span class="proof-cap">Trial · Sep 26 - Oct 2, 2026</span>
-              </button></div>
-            <h4 class="proof-expanded-heading">All tracked metrics</h4>
-            <table class="proof-comparison" aria-label="Prediction Markets Niche baseline and trial comparison">
-              <thead><tr><th scope="col">Metric</th><th scope="col">Baseline</th><th scope="col">Trial</th><th scope="col">Multiple</th></tr></thead>
-              <tbody><tr><th scope="row">Impressions</th><td>10.3K</td><td>84K</td><td>8.2×</td></tr>
-<tr><th scope="row">Profile visits</th><td>44</td><td>207</td><td>4.7×</td></tr>
-<tr><th scope="row">Engagements</th><td>312</td><td>1.5K</td><td>4.8×</td></tr>
-<tr><th scope="row">Likes</th><td>175</td><td>1K</td><td>5.7×</td></tr>
-<tr><th scope="row">Replies</th><td>81</td><td>255</td><td>3.1×</td></tr>
-<tr><th scope="row">Reposts</th><td>3</td><td>8</td><td>2.7×</td></tr>
-<tr><th scope="row">Bookmarks</th><td>9</td><td>65</td><td>7.2×</td></tr>
-<tr class="proof-rate"><th scope="row">Engagement rate</th><td>3%</td><td>1.8%</td><td>0.6×</td></tr></tbody>
-            </table>
-          </details>
-        </article>
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Figures match the receipt</span></div>
+              <button type="button" class="shot" data-shot data-view="alltime"
+                data-range="All time so far · Sep 25 - Nov 4, 2026"
+                data-stats="319.7K impressions · 909 profile visits · 2.8K engagements · 1.5K likes"
+                aria-label="Enlarge Multipli Intern all-time X analytics screenshot, Sep 25 to Nov 4, 2026">
+                <img src="assets/proof-multipli-alltime.jpg" alt="Multipli Intern X analytics, Sep 25 to Nov 4, 2026: 319.7K impressions, 909 profile visits, 2.8K engagements" width="1416" height="967" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="month" hidden
+                data-range="Last month · Oct 4 - Nov 4, 2026"
+                data-stats="248.8K impressions · 723 profile visits · 2.2K engagements · 1.2K likes"
+                aria-label="Enlarge Multipli Intern last-month X analytics screenshot, Oct 4 to Nov 4, 2026">
+                <img src="assets/proof-multipli-lastmonth.jpg" alt="Multipli Intern X analytics, Oct 4 to Nov 4, 2026: 248.8K impressions, 723 profile visits, 2.2K engagements" width="1451" height="966" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="week1" hidden
+                data-range="Week 1 · Sep 25 - Oct 1, 2026"
+                data-stats="340 replies delivered · 51.9K impressions · 139 profile visits · 478 engagements"
+                aria-label="Enlarge Multipli Intern Week 1 X analytics screenshot, Sep 25 to Oct 1, 2026">
+                <img src="assets/proof-multipli-week1.jpg" alt="Multipli Intern X analytics, Sep 25 to Oct 1, 2026: 51.9K impressions, 139 profile visits, 478 engagements" width="1276" height="993" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap" data-view="alltime">All time so far, Sep 25 - Nov 4, 2026. The impressions, follows and Posts and Replies charts all cover the full period.</figcaption>
+              <figcaption class="evidence-cap" data-view="month" hidden>Last month, Oct 4 - Nov 4, 2026. X’s comparison period overlaps the first nine days of our work, so it already includes reply activity.</figcaption>
+              <figcaption class="evidence-cap" data-view="week1" hidden>Week 1 report, Sep 25 - Oct 1, 2026. The 53 Replies figure in X analytics is separate from the 340 replies our team posted that week.</figcaption>
+            </figure>
 
-<article class="proof-block proof-case" aria-labelledby="case-personal">
-          <div class="proof-label-row">
-            <h3 class="proof-client" id="case-personal">Web3 personal brand</h3>
-            <span class="proof-niche">Name withheld</span>
+            <div class="case-notes">
+              <p class="case-work">Reply presence for the dedicated intern account of Multipli.fi, a DeFi protocol that reported crossing $500M+ in TVL in September 2026. We started on Sep 25 with a trial week, then continued with daily replies and weekly reporting. <b>The plan: 50 replies a day</b> under other people’s posts about DeFi, major or trending news, the Clarity Act, crypto and tokenization, with daily quality checks and a weekly X analytics report.</p>
+              <div class="quote">
+                <blockquote>
+                  “Great work here! I’m gonna give intern a multipli badge this week.”
+                  <cite>Client representative at Multipli, replying to the Week 1 report</cite>
+                </blockquote>
+                <button type="button" class="shot" data-shot
+                  data-range="Client response to the Week 1 report"
+                  data-stats="“Great work here! I’m gonna give intern a multipli badge this week.”"
+                  aria-label="Enlarge the original client message about the Week 1 report">
+                  <img src="assets/proof-multipli-client-message.png" alt="Original client message: Great work here! I’m gonna give intern a multipli badge this week" width="345" height="158" loading="lazy" decoding="async">
+                </button>
+              </div>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>X compares each window with the period before it, so the percentages in each screenshot differ. For Week 1, X displays roughly +6K% impression growth and +1K% growth in both profile visits and engagements versus its comparison period; these are rounded platform comparisons, separate from the 340 replies delivered. The TVL figure describes the client protocol, not a result of our replies.</p>
+              </details>
+            </div>
           </div>
-          <div class="proof-case-meta">
-            <span class="proof-pill">7 weeks tracked</span>
-            <p class="proof-period">Jun 1 - Jul 18, 2026</p>
-          </div>
-          <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">514.1K</span><span class="proof-stat-lbl">Impressions</span></div>
-<div class="proof-stat"><span class="proof-stat-val">12.2K</span><span class="proof-stat-lbl">Profile visits</span></div>
-<div class="proof-stat"><span class="proof-stat-val">570</span><span class="proof-stat-lbl">New followers</span></div></div>
-          <p class="proof-description">Seven weeks of account visibility, profile visits, and new followers, captured in the original analytics.</p>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Account-wide X analytics for Jun 1 - Jul 18, 2026. The original screenshot includes impressions, profile visits, and new followers.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card proof-shot-lg"
-            data-group="personal"
-            data-client="Web3 personal brand"
-            data-range="Jun 1 - Jul 18, 2026 · 7 weeks tracked"
-            data-stats="514.1K impressions · 12.2K profile visits · 570 new followers"
-            aria-label="Open personal brand Web3 analytics screenshot for Jun 1 to Jul 18, 2026">
-            <img src="assets/proof-personal-web3.jpg" alt="Personal brand Web3 X analytics, Jun 1 to Jul 18, 2026, 514.1K impressions" loading="lazy" width="1200" height="800">
-            <span class="proof-cap">Jun 1 - Jul 18, 2026</span>
-          </button></div>
-            
-          </details>
-        </article>
+        </div>
+      </article>
 
-<article class="proof-block proof-case" aria-labelledby="case-gaming">
-          <div class="proof-label-row">
-            <h3 class="proof-client" id="case-gaming">Web3 Gaming Project</h3>
-            <span class="proof-niche">Web3 Gaming</span>
+      <!-- ================= CASE 02: PERSONAL BRAND, 8K ================= -->
+      <article class="case" id="case-pb8k" role="tabpanel" aria-labelledby="tab-pb8k" data-case="Personal brand · 8K followers">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 02 / 06</span><span>Personal brand</span><span>Name withheld</span></p>
+            <h3 class="case-title">Personal brand, 8K followers</h3>
+            <p class="case-sub">Reply presence trial &middot; identity kept private</p>
           </div>
-          <div class="proof-case-meta">
-            <span class="proof-pill">3 weeks tracked</span>
-            <p class="proof-period">May 3-24, 2026</p>
+          <div class="views-wrap">
+            <span class="views-lbl" id="views-pb8k">Tracking window</span>
+            <div class="views" role="group" aria-labelledby="views-pb8k">
+              <button type="button" data-view-btn="full" aria-pressed="true">Full window</button>
+              <button type="button" data-view-btn="trial" aria-pressed="false">Trial week</button>
+              <button type="button" data-view-btn="week2" aria-pressed="false">Week 2</button>
+            </div>
           </div>
-          <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">209.6K</span><span class="proof-stat-lbl">Impressions</span></div>
-<div class="proof-stat"><span class="proof-stat-val">656</span><span class="proof-stat-lbl">Likes</span></div>
-<div class="proof-stat"><span class="proof-stat-val">499</span><span class="proof-stat-lbl">Profile visits</span></div></div>
-          <p class="proof-description">Up 12,721% in impressions and 65,500% in likes, starting from a near-zero baseline.</p>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Account-wide X analytics for May 3-24, 2026. The large percentage increases start from a near-zero baseline; the totals above provide context.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card proof-shot-lg"
-            data-group="gaming"
-            data-client="Web3 Gaming Project"
-            data-range="May 3-24, 2026 · 3 weeks tracked"
-            data-stats="209.6K impressions · 656 likes · 499 profile visits"
-            aria-label="Open Web3 gaming project analytics screenshot for May 3 to 24, 2026">
-            <img src="assets/proof-gaming.jpg" alt="Web3 gaming project X analytics, May 3 to 24, 2026, 209.6K impressions" loading="lazy" width="1200" height="800">
-            <span class="proof-cap">May 3-24, 2026</span>
-          </button></div>
-            
-          </details>
-        </article>
+        </header>
 
-<article class="proof-block proof-case" aria-labelledby="case-injective">
-          <div class="proof-label-row">
-            <h3 class="proof-client" id="case-injective">Injective Lounge</h3>
-            <span class="proof-niche">Web3 Community</span>
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <span class="stamp" aria-hidden="true">NDA</span>
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 02 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Personal brand</p>
+              <p class="rc-desc">Around 8K followers, name withheld</p>
+              <hr class="rc-rule">
+
+              <div class="rc-swap" data-view="full">
+                <p class="rc-period"><span>Full window</span><span>Oct 14 - Nov 1, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>314.4K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta up">+690%</span><br>vs 19 days before</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>1.1K</dd></div>
+                  <div class="is-strong"><dt>New follows <span class="delta up">+235%</span></dt><dd>171</dd></div>
+                  <div><dt>Likes</dt><dd>2K</dd></div>
+                  <div><dt>Replies (X analytics)</dt><dd>572</dd></div>
+                  <div><dt>Reposts</dt><dd>29</dd></div>
+                  <div><dt>Bookmarks <span class="delta up">+424%</span></dt><dd>89</dd></div>
+                  <div><dt>Shares</dt><dd>7</dd></div>
+                  <div><dt>Engagement rate</dt><dd>2%</dd></div>
+                </dl>
+              </div>
+
+              <div class="rc-swap" data-view="trial" hidden>
+                <p class="rc-period"><span>Trial week</span><span>Oct 14-21, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>113.9K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta up">+371%</span><br>vs prior period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits <span class="delta up">+115%</span></dt><dd>506</dd></div>
+                  <div class="is-strong"><dt>New follows <span class="delta up">+94%</span></dt><dd>70</dd></div>
+                  <div><dt>Likes <span class="delta up">+120%</span></dt><dd>956</dd></div>
+                  <div><dt>Replies (X analytics)</dt><dd>299</dd></div>
+                  <div><dt>Reposts</dt><dd>7</dd></div>
+                  <div><dt>Bookmarks</dt><dd>16</dd></div>
+                  <div><dt>Shares</dt><dd>0</dd></div>
+                  <div><dt>Engagement rate</dt><dd>2.2%</dd></div>
+                </dl>
+              </div>
+
+              <div class="rc-swap" data-view="week2" hidden>
+                <p class="rc-period"><span>Week 2</span><span>Oct 25-31, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>157.8K</mark></strong>
+                  <span class="rc-lead-side">39% above<br>the trial week</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>460</dd></div>
+                  <div class="is-strong"><dt>New follows</dt><dd>74</dd></div>
+                  <div><dt>Likes <span class="delta up">+3.4%</span></dt><dd>727</dd></div>
+                  <div><dt>Replies (X analytics) <span class="delta down">-2.7%</span></dt><dd>214</dd></div>
+                  <div><dt>Reposts</dt><dd>19</dd></div>
+                  <div><dt>Bookmarks</dt><dd>52</dd></div>
+                  <div><dt>Shares</dt><dd>7</dd></div>
+                  <div><dt>Engagement rate</dt><dd>1.8%</dd></div>
+                </dl>
+              </div>
+
+              <hr class="rc-rule">
+              <p class="rc-sec">Delivery, trial week</p>
+              <dl class="rc-lines">
+                <div class="is-strong"><dt>Replies we posted</dt><dd>211</dd></div>
+                <div><dt>Average per day</dt><dd>30</dd></div>
+                <div class="is-strong"><dt>Impressions on those replies</dt><dd>84K</dd></div>
+                <div><dt>Per reply, roughly</dt><dd>400</dd></div>
+              </dl>
+              <p class="rc-callout"><b>Reply-only figure:</b> the replies alone recorded 84K of the account’s 113.9K impressions in the trial week.</p>
+              <hr class="rc-rule">
+              <p class="rc-fine">The screenshots show account-wide totals. The 84K is reported separately. “Replies (X analytics)” counts replies the account received.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 3 original screenshots</p>
+            </div>
           </div>
-          <div class="proof-case-meta">
-            <span class="proof-pill">3 measured periods</span>
-            <p class="proof-period">Feb - Mar 2026</p>
+
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Figures match the receipt</span></div>
+              <button type="button" class="shot" data-shot data-view="full"
+                data-range="Full window · Oct 14 - Nov 1, 2026"
+                data-stats="314.4K impressions · 1.1K profile visits · 171 new follows · 2K likes"
+                aria-label="Enlarge personal brand full-window X analytics screenshot, Oct 14 to Nov 1, 2026">
+                <img src="assets/proof-pb8k-full.jpg" alt="Personal brand X analytics, Oct 14 to Nov 1, 2026: 314.4K impressions, 1.1K profile visits, 171 new follows" width="1077" height="962" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="trial" hidden
+                data-range="Trial week · Oct 14-21, 2026"
+                data-stats="113.9K impressions · 506 profile visits · 70 new follows · 956 likes"
+                aria-label="Enlarge personal brand trial week X analytics screenshot, Oct 14 to 21, 2026">
+                <img src="assets/proof-pb8k-trial.jpg" alt="Personal brand X analytics, Oct 14 to 21, 2026: 113.9K impressions, 506 profile visits, 70 new follows" width="1069" height="966" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="week2" hidden
+                data-range="Week 2 · Oct 25-31, 2026"
+                data-stats="157.8K impressions · 460 profile visits · 74 new follows · 727 likes"
+                aria-label="Enlarge personal brand week 2 X analytics screenshot, Oct 25 to 31, 2026">
+                <img src="assets/proof-pb8k-week2.jpg" alt="Personal brand X analytics, Oct 25 to 31, 2026: 157.8K impressions, 460 profile visits, 74 new follows" width="1280" height="1074" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap" data-view="full">One continuous view, Oct 14 - Nov 1, 2026. X compares it with the 19 days before the trial started.</figcaption>
+              <figcaption class="evidence-cap" data-view="trial" hidden>Trial week, Oct 14-21, 2026. 84K of these impressions came from the 211 replies posted during the week.</figcaption>
+              <figcaption class="evidence-cap" data-view="week2" hidden>Week 2, Oct 25-31, 2026. The percentages in this screenshot compare against Oct 18-24, which already includes trial days.</figcaption>
+            </figure>
+
+            <div class="case-notes">
+              <p class="case-work">A reply presence trial for a personal brand with around 8K followers. In the trial week we posted <b>211 replies, about 30 a day.</b> Those replies alone recorded 84K of the account’s 113.9K impressions, roughly 400 impressions per reply. Profile visits rose 115% to 506, new follows 94% to 70 and likes 120% to 956. Week 2 followed with 157.8K impressions, 39% higher than the trial week.</p>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>Trial week: Oct 14-21. Week 2: Oct 25-31. The full window is one continuous view, Oct 14 - Nov 1, 2026, so it also includes Oct 22-24 and Nov 1 and its totals are higher than the two weeks added together (271.7K impressions, 966 profile visits, 144 new follows and 1,683 likes). X compares each window with the equal-length period before it. For Week 2 that period already includes trial days, so its percentages are lower. For the full window it is the 19 days before the trial started.</p>
+              </details>
+            </div>
           </div>
-          <div class="proof-stats"><div class="proof-stat"><span class="proof-stat-val">198.2K</span><span class="proof-stat-lbl">Impressions</span></div>
-<div class="proof-stat"><span class="proof-stat-val">+2,004%</span><span class="proof-stat-lbl">vs baseline</span></div>
-<div class="proof-stat"><span class="proof-stat-val">+622%</span><span class="proof-stat-lbl">Bookmarks</span></div></div>
-          <p class="proof-description">Three measured periods on the same account, each above 130K impressions.</p>
-          <details class="proof-details">
-            <summary>Inspect results &amp; analytics</summary>
-            <p class="proof-evidence-note">Three snapshots from the same account: Feb 1-6, Feb 10-17, and Feb 26 - Mar 5, 2026. Headline numbers are from the first snapshot. The second snapshot shows impressions down 26% against X&rsquo;s comparison period, while profile visits and new follows rose.</p>
-            <div class="proof-row" data-proof-row><button type="button" class="proof-shot glass-card"
-              data-group="injective" data-index="0"
-              data-client="Injective Lounge"
-              data-range="Feb 1-6, 2026"
-              data-stats="198.2K impressions · +2,004% vs baseline · +622% bookmarks"
-              aria-label="Open Injective Lounge analytics screenshot for Feb 1 to 6, 2026">
-              <img src="assets/proof-injective-feb1.jpg" alt="Injective Lounge X analytics, Feb 1 to 6, 2026, 198.2K impressions" loading="lazy" width="1200" height="800">
-              <span class="proof-cap">Feb 1-6, 2026</span>
-            </button><button type="button" class="proof-shot glass-card"
-              data-group="injective" data-index="1"
-              data-client="Injective Lounge"
-              data-range="Feb 10-17, 2026"
-              data-stats="147K impressions · 699 profile visits · 85 new follows"
-              aria-label="Open Injective Lounge analytics screenshot for Feb 10 to 17, 2026">
-              <img src="assets/proof-injective-feb10.jpg" alt="Injective Lounge X analytics, Feb 10 to 17, 2026, 147K impressions" loading="lazy" width="1200" height="800">
-              <span class="proof-cap">Feb 10-17, 2026</span>
-            </button><button type="button" class="proof-shot glass-card"
-              data-group="injective" data-index="2"
-              data-client="Injective Lounge"
-              data-range="Feb 26 - Mar 5, 2026"
-              data-stats="131.7K impressions · 410 profile visits · 72 new follows"
-              aria-label="Open Injective Lounge analytics screenshot for Feb 26 to Mar 5, 2026">
-              <img src="assets/proof-injective-feb26.jpg" alt="Injective Lounge X analytics, Feb 26 to Mar 5, 2026, 131.7K impressions" loading="lazy" width="1200" height="800">
-              <span class="proof-cap">Feb 26 - Mar 5, 2026</span>
-            </button></div>
-            
-          </details>
-        </article>
-</div>
-</div>
+        </div>
+      </article>
+
+      <!-- ================= CASE 03: PREDICTION MARKETS ================= -->
+      <article class="case" id="case-prediction-markets" role="tabpanel" aria-labelledby="tab-prediction-markets" data-case="Prediction markets personal brand">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 03 / 06</span><span>Personal brand</span><span>Name withheld</span></p>
+            <h3 class="case-title">Prediction markets personal brand</h3>
+            <p class="case-sub">Prediction markets niche &middot; one-week trial &middot; Sep 26 - Oct 2, 2026</p>
+          </div>
+          <div class="views-wrap">
+            <span class="views-lbl" id="views-pm">Screenshot</span>
+            <div class="views" role="group" aria-labelledby="views-pm">
+              <button type="button" data-view-btn="trial" aria-pressed="true">Trial week</button>
+              <button type="button" data-view-btn="baseline" aria-pressed="false">Baseline week</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <span class="stamp" aria-hidden="true">NDA</span>
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 03 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Prediction markets brand</p>
+              <p class="rc-desc">Personal brand, name withheld</p>
+              <hr class="rc-rule">
+              <p class="rc-period"><span>Trial week</span><span>Sep 26 - Oct 2, 2026</span></p>
+              <div class="rc-lead">
+                <span class="rc-lead-lbl">Impressions vs baseline week</span>
+                <strong class="rc-lead-val"><mark>8.2×</mark></strong>
+                <span class="rc-lead-side">10.3K<br>to 84K</span>
+              </div>
+              <table class="rc-table" aria-label="Baseline week compared with the trial week">
+                <thead><tr><th scope="col">Metric</th><th scope="col">Baseline</th><th scope="col">Trial</th><th scope="col">Multiple</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Impressions</th><td>10.3K</td><td>84K</td><td>8.2×</td></tr>
+                  <tr><th scope="row">Profile visits</th><td>44</td><td>207</td><td>4.7×</td></tr>
+                  <tr><th scope="row">Engagements</th><td>312</td><td>1.5K</td><td>4.8×</td></tr>
+                  <tr><th scope="row">Likes</th><td>175</td><td>1K</td><td>5.7×</td></tr>
+                  <tr><th scope="row">Replies (X)</th><td>81</td><td>255</td><td>3.1×</td></tr>
+                  <tr><th scope="row">Reposts</th><td>3</td><td>8</td><td>2.7×</td></tr>
+                  <tr><th scope="row">Bookmarks</th><td>9</td><td>65</td><td>7.2×</td></tr>
+                  <tr class="is-muted"><th scope="row">Engagement rate</th><td>3%</td><td>1.8%</td><td>0.6×</td></tr>
+                </tbody>
+              </table>
+              <hr class="rc-rule">
+              <p class="rc-fine">Baseline: Sep 20-26. Trial: Sep 26 - Oct 2, 2026. Both windows contain Sep 26. Multiples compare the displayed totals and are approximate where X rounds values.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 2 original screenshots</p>
+            </div>
+          </div>
+
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Before and after</span></div>
+              <button type="button" class="shot" data-shot data-view="trial"
+                data-range="Trial week · Sep 26 - Oct 2, 2026"
+                data-stats="84K impressions · 207 profile visits · 1.5K engagements · 1.8% engagement rate"
+                aria-label="Enlarge prediction markets trial week X analytics screenshot, Sep 26 to Oct 2, 2026">
+                <img src="assets/polymarket-after.png" alt="Original trial X analytics for Sep 26 to Oct 2, 2026: 84K impressions, 207 profile visits and 1.5K engagements" width="1256" height="994" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="baseline" hidden
+                data-range="Baseline week · Sep 20-26, 2026"
+                data-stats="10.3K impressions · 44 profile visits · 312 engagements · 3% engagement rate"
+                aria-label="Enlarge prediction markets baseline X analytics screenshot, Sep 20 to 26, 2026">
+                <img src="assets/polymarket-before.png" alt="Original baseline X analytics for Sep 20 to 26, 2026: 10.3K impressions, 44 profile visits and 312 engagements" width="1246" height="1000" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap" data-view="trial">Trial week, Sep 26 - Oct 2, 2026: 84K impressions, 207 profile visits, 1.5K engagements. Switch to the baseline week to compare.</figcaption>
+              <figcaption class="evidence-cap" data-view="baseline" hidden>Baseline week, Sep 20-26, 2026, before the trial: 10.3K impressions, 44 profile visits, 312 engagements.</figcaption>
+            </figure>
+
+            <div class="case-notes">
+              <p class="case-work">A one-week reply presence trial for a personal brand in the prediction markets niche. Against the baseline week, <b>impressions grew from 10.3K to 84K,</b> profile visits from 44 to 207 and engagements from 312 to about 1.5K.</p>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>Engagement volume grew while engagement rate moved from 3% to 1.8%. Larger reach and more interactions can coincide with a lower engagement rate. The percentages X shows inside each screenshot use its own comparison period, so they differ from the direct before-and-after multiples on the receipt.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================= CASE 04: WEB3 PERSONAL BRAND ================= -->
+      <article class="case" id="case-web3-brand" role="tabpanel" aria-labelledby="tab-web3-brand" data-case="Web3 personal brand">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 04 / 06</span><span>Personal brand</span><span>Name withheld</span></p>
+            <h3 class="case-title">Web3 personal brand</h3>
+            <p class="case-sub">Seven weeks tracked &middot; Jun 1 - Jul 18, 2026</p>
+          </div>
+        </header>
+
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <span class="stamp" aria-hidden="true">NDA</span>
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 04 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Web3 personal brand</p>
+              <p class="rc-desc">Personal brand, name withheld</p>
+              <hr class="rc-rule">
+              <p class="rc-period"><span>7 weeks tracked</span><span>Jun 1 - Jul 18, 2026</span></p>
+              <div class="rc-lead">
+                <span class="rc-lead-lbl">Impressions</span>
+                <strong class="rc-lead-val"><mark>514.1K</mark></strong>
+                <span class="rc-lead-side"><span class="delta up">+191%</span><br>vs prior period</span>
+              </div>
+              <dl class="rc-lines">
+                <div class="is-strong"><dt>Profile visits <span class="delta up">+61%</span></dt><dd>12.2K</dd></div>
+                <div class="is-strong"><dt>New follows <span class="delta down">-23%</span></dt><dd>570</dd></div>
+                <div><dt>Likes</dt><dd>4.5K</dd></div>
+                <div><dt>Engagement rate <span class="delta down">-40%</span></dt><dd>6.2%</dd></div>
+              </dl>
+              <hr class="rc-rule">
+              <p class="rc-fine">Account-wide X analytics. New follows is the total recorded in this window, not net follower growth.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 1 original screenshot</p>
+            </div>
+          </div>
+
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Figures match the receipt</span></div>
+              <button type="button" class="shot" data-shot
+                data-range="Jun 1 - Jul 18, 2026 · 7 weeks tracked"
+                data-stats="514.1K impressions · 12.2K profile visits · 570 new follows · 4.5K likes"
+                aria-label="Enlarge Web3 personal brand X analytics screenshot, Jun 1 to Jul 18, 2026">
+                <img src="assets/proof-personal-web3.jpg" alt="Web3 personal brand X analytics, Jun 1 to Jul 18, 2026: 514.1K impressions, 12.2K profile visits, 570 new follows" width="1061" height="985" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap">Jun 1 - Jul 18, 2026. One screenshot covers the full seven-week window.</figcaption>
+            </figure>
+
+            <div class="case-notes">
+              <p class="case-work">Reply presence for a personal brand in Web3. Across the seven-week tracking window the account recorded <b>514.1K impressions, 12.2K profile visits and 570 new follows.</b> X showed impressions up 191% and profile visits up 61% versus its comparison period.</p>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>New follows is the total recorded in this window, rather than net follower growth. The screenshot shows new follows down 23% and engagement rate at 6.2%, down 40% versus the X comparison period.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================= CASE 05: WEB3 GAMING ================= -->
+      <article class="case" id="case-gaming" role="tabpanel" aria-labelledby="tab-gaming" data-case="Web3 gaming project">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 05 / 06</span><span>Project account</span><span>Name withheld</span></p>
+            <h3 class="case-title">Web3 gaming project</h3>
+            <p class="case-sub">Web3 gaming &middot; three weeks tracked &middot; May 3-24, 2026</p>
+          </div>
+        </header>
+
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <span class="stamp" aria-hidden="true">NDA</span>
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 05 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Web3 gaming project</p>
+              <p class="rc-desc">Project account, name withheld</p>
+              <hr class="rc-rule">
+              <p class="rc-period"><span>3 weeks tracked</span><span>May 3-24, 2026</span></p>
+              <div class="rc-lead">
+                <span class="rc-lead-lbl">Impressions</span>
+                <strong class="rc-lead-val"><mark>209.6K</mark></strong>
+                <span class="rc-lead-side"><span class="delta up">+12,721%</span><br>near-zero start</span>
+              </div>
+              <dl class="rc-lines">
+                <div class="is-strong"><dt>Likes <span class="delta up">+65,500%</span></dt><dd>656</dd></div>
+                <div class="is-strong"><dt>Profile visits</dt><dd>499</dd></div>
+                <div><dt>New follows</dt><dd>53</dd></div>
+                <div><dt>Engagement rate <span class="delta down">-76%</span></dt><dd>1.2%</dd></div>
+              </dl>
+              <hr class="rc-rule">
+              <p class="rc-fine">Account-wide X analytics. The large percentage increases reflect the low starting point; the totals give the context.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 1 original screenshot</p>
+            </div>
+          </div>
+
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Figures match the receipt</span></div>
+              <button type="button" class="shot" data-shot
+                data-range="May 3-24, 2026 · 3 weeks tracked"
+                data-stats="209.6K impressions · 656 likes · 499 profile visits · 53 new follows"
+                aria-label="Enlarge Web3 gaming project X analytics screenshot, May 3 to 24, 2026">
+                <img src="assets/proof-gaming.jpg" alt="Web3 gaming project X analytics, May 3 to 24, 2026: 209.6K impressions, 656 likes, 499 profile visits" width="1087" height="987" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap">May 3-24, 2026. One screenshot covers the full three-week window.</figcaption>
+            </figure>
+
+            <div class="case-notes">
+              <p class="case-work">Reply presence for a Web3 gaming project whose account identity stays private. The recorded period reached <b>209.6K impressions, 656 likes and 499 profile visits,</b> starting from a near-zero baseline.</p>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>X showed impression growth of 12,721% and like growth of 65,500%. Those percentages are large because the account started from a near-zero baseline. The screenshot also records a 1.2% engagement rate, down 76% versus the X comparison period.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================= CASE 06: INJECTIVE LOUNGE ================= -->
+      <article class="case" id="case-injective" role="tabpanel" aria-labelledby="tab-injective" data-case="Injective Lounge · Web3 community">
+        <header class="case-head">
+          <div>
+            <p class="case-kicker"><span>Receipt 06 / 06</span><span>Community account</span><span>3 measured periods</span></p>
+            <h3 class="case-title">Injective Lounge</h3>
+            <p class="case-sub">Web3 community &middot; February - March 2026</p>
+          </div>
+          <div class="views-wrap">
+            <span class="views-lbl" id="views-inj">Measured period</span>
+            <div class="views" role="group" aria-labelledby="views-inj">
+              <button type="button" data-view-btn="p1" aria-pressed="true">Feb 1-6</button>
+              <button type="button" data-view-btn="p2" aria-pressed="false">Feb 10-17</button>
+              <button type="button" data-view-btn="p3" aria-pressed="false">Feb 26 - Mar 5</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="case-body">
+          <div class="receipt-wrap">
+            <div class="receipt">
+              <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+              <p class="rc-meta rc-meta--left">Results receipt &middot; 06 of 06</p>
+              <hr class="rc-rule">
+              <p class="rc-client">Injective Lounge</p>
+              <p class="rc-desc">Web3 community account</p>
+              <hr class="rc-rule">
+
+              <div class="rc-swap" data-view="p1">
+                <p class="rc-period"><span>Period 1 of 3</span><span>Feb 1-6, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>198.2K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta up">+2,004%</span><br>vs prior period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>241</dd></div>
+                  <div class="is-strong"><dt>New follows</dt><dd>19</dd></div>
+                  <div><dt>Bookmarks, change</dt><dd><span class="delta up">+622%</span></dd></div>
+                </dl>
+              </div>
+
+              <div class="rc-swap" data-view="p2" hidden>
+                <p class="rc-period"><span>Period 2 of 3</span><span>Feb 10-17, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>147K</mark></strong>
+                  <span class="rc-lead-side"><span class="delta down">-26%</span><br>vs prior period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>699</dd></div>
+                  <div class="is-strong"><dt>New follows</dt><dd>85</dd></div>
+                </dl>
+              </div>
+
+              <div class="rc-swap" data-view="p3" hidden>
+                <p class="rc-period"><span>Period 3 of 3</span><span>Feb 26 - Mar 5, 2026</span></p>
+                <div class="rc-lead">
+                  <span class="rc-lead-lbl">Impressions</span>
+                  <strong class="rc-lead-val"><mark>131.7K</mark></strong>
+                  <span class="rc-lead-side">third measured<br>period</span>
+                </div>
+                <dl class="rc-lines">
+                  <div class="is-strong"><dt>Profile visits</dt><dd>410</dd></div>
+                  <div class="is-strong"><dt>New follows</dt><dd>72</dd></div>
+                </dl>
+              </div>
+
+              <hr class="rc-rule">
+              <p class="rc-sec">All three periods, impressions</p>
+              <dl class="rc-lines">
+                <div><dt>Feb 1-6</dt><dd>198.2K</dd></div>
+                <div><dt>Feb 10-17</dt><dd>147K</dd></div>
+                <div><dt>Feb 26 - Mar 5</dt><dd>131.7K</dd></div>
+                <div class="is-strong"><dt>Three periods added up</dt><dd>476.9K</dd></div>
+              </dl>
+              <hr class="rc-rule">
+              <p class="rc-fine">Account-wide X analytics. Each screenshot keeps its own X comparison period.</p>
+              <hr class="rc-rule">
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="rc-meta">Source: 3 original screenshots</p>
+            </div>
+          </div>
+
+          <div>
+            <figure class="evidence">
+              <div class="evidence-bar"><b>Original X analytics</b><span>Figures match the receipt</span></div>
+              <button type="button" class="shot" data-shot data-view="p1"
+                data-range="Period 1 · Feb 1-6, 2026"
+                data-stats="198.2K impressions · 241 profile visits · 19 new follows · +2,004% impressions · +622% bookmarks"
+                aria-label="Enlarge Injective Lounge X analytics screenshot, Feb 1 to 6, 2026">
+                <img src="assets/proof-injective-feb1.jpg" alt="Injective Lounge X analytics, Feb 1 to 6, 2026: 198.2K impressions, 241 profile visits, 19 new follows" width="884" height="934" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="p2" hidden
+                data-range="Period 2 · Feb 10-17, 2026"
+                data-stats="147K impressions · 699 profile visits · 85 new follows"
+                aria-label="Enlarge Injective Lounge X analytics screenshot, Feb 10 to 17, 2026">
+                <img src="assets/proof-injective-feb10.jpg" alt="Injective Lounge X analytics, Feb 10 to 17, 2026: 147K impressions, 699 profile visits, 85 new follows" width="915" height="943" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <button type="button" class="shot" data-shot data-view="p3" hidden
+                data-range="Period 3 · Feb 26 - Mar 5, 2026"
+                data-stats="131.7K impressions · 410 profile visits · 72 new follows"
+                aria-label="Enlarge Injective Lounge X analytics screenshot, Feb 26 to Mar 5, 2026">
+                <img src="assets/proof-injective-feb26.jpg" alt="Injective Lounge X analytics, Feb 26 to Mar 5, 2026: 131.7K impressions, 410 profile visits, 72 new follows" width="908" height="983" loading="lazy" decoding="async">
+                <span class="shot-zoom" aria-hidden="true"><svg><use href="#i-expand"/></svg>Enlarge</span>
+              </button>
+              <figcaption class="evidence-cap" data-view="p1">First snapshot, Feb 1-6, 2026. The headline growth figures come from this one.</figcaption>
+              <figcaption class="evidence-cap" data-view="p2" hidden>Second snapshot, Feb 10-17, 2026. Impressions are down 26% against X’s comparison period, while profile visits and new follows rose.</figcaption>
+              <figcaption class="evidence-cap" data-view="p3" hidden>Third snapshot, Feb 26 - Mar 5, 2026.</figcaption>
+            </figure>
+
+            <div class="case-notes">
+              <p class="case-work">Reply presence for Injective Lounge, a Web3 community account. <b>Its three recorded snapshots each exceeded 130K impressions.</b> The highest reached 198.2K, with X showing a 2,004% increase in impressions and a 622% increase in bookmarks.</p>
+              <details class="fine">
+                <summary>How to read this case</summary>
+                <p>Three snapshots from the same account: Feb 1-6, Feb 10-17 and Feb 26 - Mar 5, 2026. The headline growth figures come from the first snapshot. The second snapshot shows a 26% decrease in impressions versus its X comparison period, alongside an increase in profile visits and new follows.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="proof-foot">
+        <details class="fine">
+          <summary>How to read all of these results</summary>
+          <p>The screenshots report account-wide analytics during the work. Impressions, profile visits and engagement measure activity on X; they do not isolate the effect of replies from other account activity. Where a reply-only figure is given, it is stated separately from the account-wide total. Tracking windows differ, so the cases should be read individually rather than as a ranking.</p>
+          <p>K means thousand. Growth multiples use the displayed totals and are approximate where X rounds values. Percent changes copied from X use its comparison period. The analytics metric called Replies is separate from the number of replies our team posts. Client names are withheld where the account identity is not public.</p>
+        </details>
       </div>
     </div>
   </section>
 
-
-  <!-- REPLY STRATEGY: low-friction path before a call -->
-  <section class="sw" id="strategy" aria-labelledby="strategy-title">
-    <div class="si">
-      <div class="samples-wrap glass-card reveal">
-        <div class="samples-copy">
-          <span class="eyebrow">Before any call</span>
-          <h2 class="h-md" id="strategy-title">Get a reply strategy for <em class="accent">your account</em> first.</h2>
-          <p class="samples-body">Send your X handle and what you&rsquo;re building. We look at where your target audience already spends time on X, find the gap, and send back a written reply strategy by DM. No account access, no call, no payment.</p>
-          <ul class="samples-steps">
-            <li><b>1</b><span>The gap: where your audience is talking and you&rsquo;re not replying</span></li>
-            <li><b>2</b><span>Your ICP and the accounts they already follow</span></li>
-            <li><b>3</b><span>The plan: what to reply to, in what voice, and how it brings people to your product</span></li>
-          </ul>
+  <!-- CTA BAND: the low-friction step right after the proof -->
+  <section class="sec band" aria-labelledby="band-title">
+    <div class="wrap">
+      <div class="band-in reveal">
+        <div>
+          <h2 class="band-title" id="band-title">Seen the receipts? Get the plan for your account.</h2>
+          <p class="band-text">Book the free 30-minute X audit, or get a written reply strategy by DM first. No account access, no payment.</p>
         </div>
-        <div class="samples-actions">
-          <div class="strategy-flow" aria-label="Relevant reply, then your X profile, then your product">
-            <span>Relevant reply</span><i aria-hidden="true">&rarr;</i><span>X profile</span><i aria-hidden="true">&rarr;</i><span>Your product</span>
-          </div>
-          <!-- TODO: point this to the Tally strategy-request form (handle, what you're building, team/personal, Telegram, monthly budget range) -->
-          <a href="https://x.com/shynxbt" target="_blank" rel="noopener" class="btn btn-blue btn-lg btn-full" data-strategy-request>Get your reply strategy</a>
-          <p class="samples-note">Opens the X profile of @shynxbt, R3PLY&rsquo;s founder. Tap Message and send your handle plus what you&rsquo;re building.</p>
-          <a href="#calendly" data-book-call class="samples-alt">Prefer a call? Book the free 30-minute X audit &rarr;</a>
+        <div class="band-ctas">
+          <a href="#calendly" data-book-call class="btn btn-ink">Book my free X audit <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a href="#strategy" class="btn btn-outline-ink">Get your reply strategy</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section class="sw" id="problem" aria-labelledby="problem-title">
-    <div class="si">
-      <div class="s-intro">
-        <span class="eyebrow reveal">The Problem</span>
-        <h2 class="h-lg reveal" id="problem-title">Your content&rsquo;s ready.<br><em class="accent">The reach isn&rsquo;t.</em></h2>
-        <p class="s-body reveal">The top accounts on CT don&rsquo;t just post, they reply. They show up under the posts their audience already reads. Doing that well takes 2-4 hours a day, and nobody on the team has them.</p>
+  <!-- WHY REPLIES -->
+  <section class="sec" id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker reveal">The problem</p>
+          <h2 class="h2 reveal" id="why-title">Your content’s ready. <span class="em">The reach isn’t.</span></h2>
+        </div>
+        <p class="lead reveal" style="--d:.08s">The top accounts on CT don’t just post, they reply. They show up under the posts their audience already reads. Doing that well takes 2-4 hours a day, and nobody on the team has them.</p>
       </div>
-      <div class="pain-grid">
-        <article class="glass-card pain-card reveal s1" data-tilt>
-          <span class="spotlight"></span>
-          <span class="pain-kicker">01 &middot; Reach</span>
-          <h3 class="pain-title">Your tweets die in an hour.</h3>
-          <p class="pain-text">A good post gets a few hundred views, then disappears. If nobody sees you under the bigger accounts in your niche, your own timeline is the only place you exist.</p>
+      <div class="pains">
+        <article class="pain reveal">
+          <p class="pain-k"><b>01</b>Reach</p>
+          <h3 class="h3">Your tweets die in an hour.</h3>
+          <p>A good post gets a few hundred views, then disappears. If nobody sees you under the bigger accounts in your niche, your own timeline is the only place you exist.</p>
         </article>
-        <article class="glass-card pain-card reveal s2" data-tilt>
-          <span class="spotlight"></span>
-          <span class="pain-kicker">02 &middot; Trust</span>
-          <h3 class="pain-title">Your account looks ghosted.</h3>
-          <p class="pain-text">Partners, investors and users check your X account before even checking out your product. A quiet week and an empty replies tab looks like a slow project, even when the team ships daily.</p>
+        <article class="pain reveal" style="--d:.08s">
+          <p class="pain-k"><b>02</b>Trust</p>
+          <h3 class="h3">Your account looks ghosted.</h3>
+          <p>Partners, investors and users check your X account before even checking out your product. A quiet week and an empty replies tab looks like a slow project, even when the team ships daily.</p>
         </article>
-        <article class="glass-card pain-card reveal s3" data-tilt>
-          <span class="spotlight"></span>
-          <span class="pain-kicker">03 &middot; Burned before</span>
-          <h3 class="pain-title">Cheap SMM made it worse.</h3>
-          <p class="pain-text">Generic replies, engagement pods and AI slop under your name cost more than silence. That&rsquo;s why most teams stop handing the account to anyone.</p>
+        <article class="pain reveal" style="--d:.16s">
+          <p class="pain-k"><b>03</b>Burned before</p>
+          <h3 class="h3">Cheap SMM made it worse.</h3>
+          <p>Generic replies, engagement pods and AI slop under your name cost more than silence. That’s why most teams stop handing the account to anyone.</p>
         </article>
       </div>
     </div>
   </section>
 
   <!-- PROCESS -->
-  <section class="sw" id="process" aria-labelledby="process-title">
-    <div class="si">
-      <div class="s-intro">
-        <span class="eyebrow reveal">The System</span>
-        <h2 class="h-lg reveal" id="process-title">We run your replies on X.<br><em class="accent">Every day.</em></h2>
-        <p class="s-body reveal">We learn your voice, your opinions, your niche in one brief call. Then we build your reputation on CT by showing up for you every single day.</p>
+  <section class="sec" id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker reveal">The system</p>
+          <h2 class="h2 reveal" id="process-title">We run your replies on X. <span class="em">Every day.</span></h2>
+        </div>
+        <p class="lead reveal" style="--d:.08s">We learn your voice, your opinions, your niche in one brief call. Then we build your reputation on CT by showing up for you every single day.</p>
       </div>
-      <div class="timeline">
-        <div class="t-step"><span class="step-num">01</span><div class="t-dot">01</div><div class="t-content"><div class="t-title">Voice onboarding</div><div class="t-body">30-minute call. We learn how you think, what you believe, and how you naturally speak on CT. We study your past posts and takes right after.</div></div></div>
-        <div class="t-step"><span class="step-num">02</span><div class="t-dot">02</div><div class="t-content"><div class="t-title">Target thread monitoring</div><div class="t-body">We identify the 20-50 accounts your ideal audience follows, VCs, founders, analysts, KOLs in your niche. Every time they post, we're watching.</div></div></div>
-        <div class="t-step"><span class="step-num">03</span><div class="t-dot">03</div><div class="t-content"><div class="t-title">Reply drafting</div><div class="t-body">A CT-native writer drafts sharp, opinionated replies in your voice. No filler. No AI slop. Every reply sounds like you had a real take on it.</div></div></div>
-        <div class="t-step"><span class="step-num">04</span><div class="t-dot">04</div><div class="t-content"><div class="t-title">Posting via X Delegate</div><div class="t-body">Replies go live through X's official Delegate feature. Your account. Your name. Our execution. Zero passwords involved, ever.</div></div></div>
-        <div class="t-step"><span class="step-num">05</span><div class="t-dot">05</div><div class="t-content"><div class="t-title">Weekly optimization</div><div class="t-body">We review which replies drove the most profile visits, follows, and DMs. We double down on what's working. You get a clean report every Sunday.</div></div></div>
-      </div>
+
+      <ol class="flow" aria-label="How a reply brings people to your product">
+        <li class="reveal">
+          <span class="flow-ico" aria-hidden="true"><svg><use href="#i-reply"/></svg></span>
+          <h3>Relevant reply</h3>
+          <p>A human-written reply from your account, under a post your audience is already reading.</p>
+          <span class="flow-metric">Counted as impressions</span>
+        </li>
+        <li class="reveal" style="--d:.1s">
+          <span class="flow-ico" aria-hidden="true"><svg><use href="#i-user"/></svg></span>
+          <h3>X profile</h3>
+          <p>The people it lands with tap through to see who said it.</p>
+          <span class="flow-metric">Counted as profile visits</span>
+        </li>
+        <li class="reveal" style="--d:.2s">
+          <span class="flow-ico" aria-hidden="true"><svg><use href="#i-box"/></svg></span>
+          <h3>Your product</h3>
+          <p>Your bio, pinned post and link take it from there.</p>
+          <span class="flow-metric">Where your funnel takes over</span>
+        </li>
+      </ol>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <div class="step-node"><b>01</b></div>
+          <h3>Voice onboarding</h3>
+          <p>30-minute call. We learn how you think, what you believe, and how you naturally speak on CT. We study your past posts and takes right after.</p>
+        </li>
+        <li class="step reveal" style="--d:.06s">
+          <div class="step-node"><b>02</b></div>
+          <h3>Target thread monitoring</h3>
+          <p>We identify the 20-50 accounts your ideal audience follows, VCs, founders, analysts, KOLs in your niche. Every time they post, we’re watching.</p>
+        </li>
+        <li class="step reveal" style="--d:.12s">
+          <div class="step-node"><b>03</b></div>
+          <h3>Reply drafting</h3>
+          <p>A CT-native writer drafts sharp, opinionated replies in your voice. No filler. No AI slop. Every reply sounds like you had a real take on it.</p>
+        </li>
+        <li class="step reveal" style="--d:.18s">
+          <div class="step-node"><b>04</b></div>
+          <h3>Posting via X Delegate</h3>
+          <p>Replies go live through X’s official Delegate feature. Your account. Your name. Our execution. Zero passwords involved, ever.</p>
+        </li>
+        <li class="step reveal" style="--d:.24s">
+          <div class="step-node"><b>05</b></div>
+          <h3>Weekly optimization</h3>
+          <p>We review which replies drove the most profile visits, follows, and DMs. We double down on what’s working. You get a clean report every Sunday.</p>
+        </li>
+      </ol>
     </div>
   </section>
-
-  <!-- Proof lightbox -->
-  <div class="proof-lb" id="proof-lightbox" role="dialog" aria-modal="true" aria-labelledby="proof-lb-client" hidden>
-    <div class="proof-lb-backdrop" data-proof-lb-close tabindex="-1"></div>
-    <div class="proof-lb-dialog">
-      <button type="button" class="proof-lb-close" data-proof-lb-close aria-label="Close screenshot">×</button>
-      <button type="button" class="proof-lb-nav proof-lb-prev" data-proof-lb-prev aria-label="Previous screenshot">‹</button>
-      <button type="button" class="proof-lb-nav proof-lb-next" data-proof-lb-next aria-label="Next screenshot">›</button>
-      <div class="proof-lb-img-wrap">
-        <img id="proof-lb-img" src="" alt="">
-      </div>
-      <div class="proof-lb-meta">
-        <div class="proof-lb-client" id="proof-lb-client"></div>
-        <div class="proof-lb-range" id="proof-lb-range"></div>
-        <div class="proof-lb-stats" id="proof-lb-stats"></div>
-      </div>
-    </div>
-  </div>
 
   <!-- WHAT'S INCLUDED + GUARANTEE -->
-  <section class="sw" id="pricing" aria-labelledby="pricing-title">
-    <div class="si">
-      <div class="s-intro">
-        <span class="eyebrow reveal">What&rsquo;s included</span>
-        <h2 class="h-lg reveal" id="pricing-title">Built around <em class="accent">your volume.</em></h2>
-        <p class="s-body reveal">Every account is different. Pricing is scoped to your reply volume and goals on a 30-minute call, not forced into a fixed tier.</p>
+  <section class="sec" id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker reveal">What’s included</p>
+          <h2 class="h2 reveal" id="pricing-title">Built around <span class="em">your volume.</span></h2>
+        </div>
+        <p class="lead reveal" style="--d:.08s">Every account is different. Pricing is scoped to your reply volume and goals on a 30-minute call, not forced into a fixed tier.</p>
       </div>
-      <div class="offer-grid">
-        <div class="pricing-wrap reveal">
-          <div class="pricing-card">
-            <div class="pricing-glow"></div>
-            <div class="pricing-inner">
-              <div class="pricing-label">Every account gets</div>
-              <p class="pricing-desc">Daily, consistent replies in your exact voice, to the accounts your audience follows most. Works for a project account, a founder account, or both. Volume and cadence scoped to fit your goals.</p>
-              <ul class="pricing-feats">
-                <li>Daily, consistent CT replies</li>
-                <li>Project, founder or intern accounts</li>
-                <li>Voice onboarding call included</li>
-                <li>Native X Delegate access, no passwords</li>
-                <li>Target thread monitoring, 20-50 accounts</li>
-                <li>Weekly performance report every Sunday</li>
-                <li>Cancel anytime with 7 days notice</li>
-              </ul>
-              <a href="#calendly" data-book-call class="btn btn-blue btn-lg btn-full">Book my free X audit</a>
-            </div>
+
+      <div class="offer">
+        <div class="receipt-wrap reveal">
+          <div class="receipt">
+            <p class="rc-brand rc-brand--sm">R<span>3</span>PLY</p>
+            <p class="rc-meta rc-meta--left">Order ticket &middot; every account gets</p>
+            <hr class="rc-rule">
+            <ul class="ticket-lines">
+              <li><span>Daily, consistent CT replies</span><em>INCL.</em></li>
+              <li><span>Project, founder or intern accounts</span><em>INCL.</em></li>
+              <li><span>Voice onboarding call included</span><em>INCL.</em></li>
+              <li><span>Native X Delegate access, no passwords</span><em>INCL.</em></li>
+              <li><span>Target thread monitoring, 20-50 accounts</span><em>INCL.</em></li>
+              <li><span>Weekly performance report every Sunday</span><em>INCL.</em></li>
+              <li><span>Cancel anytime with 7 days notice</span><em>INCL.</em></li>
+            </ul>
+            <hr class="rc-rule rc-rule--double">
+            <p class="ticket-total"><span>Price</span><span><mark>Scoped to your volume</mark></span></p>
+            <p class="st-fine">Agreed on a 30-minute call. No fixed tiers.</p>
+            <hr class="rc-rule">
+            <div class="barcode" aria-hidden="true"></div>
+            <p class="rc-meta">30-day money-back guarantee</p>
           </div>
         </div>
-        <div class="guarantee-card reveal s2" id="guarantee">
-          <span class="eyebrow">The guarantee</span>
-          <h3 class="guarantee-card-title">30 days, or your<br><em class="accent">money back.</em></h3>
-          <p>We agree on a 30-day goal before starting, and if we don&rsquo;t hit it in the first month of the service, we refund the month in full.</p>
+
+        <div class="offer-side">
+          <p class="offer-copy reveal">Daily, consistent replies in your exact voice, to the accounts your audience follows most. Works for a project account, a founder account, or both. Volume and cadence scoped to fit your goals.</p>
+          <div class="guarantee reveal" id="guarantee">
+            <div class="seal" aria-hidden="true"><span><b>30</b>days<br>money back</span></div>
+            <p class="kicker">The guarantee</p>
+            <h3 class="guarantee-title">30 days, or your money back.</h3>
+            <p>We agree on a 30-day goal before starting, and if we don’t hit it in the first month of the service, we refund the month in full.</p>
+          </div>
+          <div class="offer-cta reveal">
+            <a href="#calendly" data-book-call class="btn btn-primary">Book my free X audit <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <p>Scope and pricing are discussed on the call, if R3PLY is a fit.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CALENDLY: existing 30-minute event and intake form -->
-  <section class="sw" id="calendly" aria-labelledby="calendly-title">
-    <div class="si">
-      <div class="cal-grid">
+  <!-- START: the two next steps, side by side -->
+  <section class="sec start" id="start" aria-labelledby="start-title">
+    <div class="wrap">
+      <div class="sec-head">
         <div>
-          <span class="eyebrow reveal">Your free X audit</span>
-          <h2 class="h-md reveal" id="calendly-title">30 minutes.<br>A clearer plan for<br><em class="accent">your presence on X.</em></h2>
-          <p class="cal-copy reveal">We’ll review your profile and where your audience spends time. You’ll leave with a practical starting point for your reply strategy.</p>
-          <ul class="cal-list reveal">
-            <li>Explore one reply angle that fits your voice</li>
-            <li>Discuss the scope and pricing if R3PLY is a fit</li>
-            <li>No payment required to book</li>
-          </ul>
-          <p class="cal-prep reveal">Bring your X handle and the audience you want to reach. You’ll speak with <a href="https://x.com/shynxbt" target="_blank" rel="noopener">@shynxbt</a>, R3PLY’s founder.</p>
+          <p class="kicker reveal">Your next step</p>
+          <h2 class="h2 reveal" id="start-title">Two ways to start. <span class="hl">Both free.</span></h2>
         </div>
-        <div>
+        <p class="lead reveal" style="--d:.08s">Talk it through on a 30-minute call, or get a written reply strategy for your account by DM before you speak to anyone.</p>
+      </div>
+
+      <div class="start-grid">
+        <div class="paths">
+          <div class="path path--main reveal">
+            <p class="path-k"><b>A</b>Your free X audit</p>
+            <h3 class="h3">30 minutes. A clearer plan for your presence on X.</h3>
+            <p>We’ll review your profile and where your audience spends time. You’ll leave with a practical starting point for your reply strategy.</p>
+            <ul class="ticks">
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Explore one reply angle that fits your voice</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Discuss the scope and pricing if R3PLY is a fit</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>No payment required to book</li>
+            </ul>
+            <p class="path-note">Bring your X handle and the audience you want to reach. You’ll speak with <a class="link" href="https://x.com/shynxbt" target="_blank" rel="noopener">@shynxbt</a>, R3PLY’s founder. Pick a time in the calendar.</p>
+          </div>
+
+          <div class="path path--alt reveal" id="strategy">
+            <p class="path-k"><b>B</b>Before any call</p>
+            <h3 class="h3">Get a reply strategy for your account first.</h3>
+            <p>Send your X handle and what you’re building. We look at where your target audience already spends time on X, find the gap, and send back a written reply strategy by DM. No account access, no call, no payment.</p>
+            <ol class="ticks">
+              <li><b>1</b>The gap: where your audience is talking and you’re not replying</li>
+              <li><b>2</b>Your ICP and the accounts they already follow</li>
+              <li><b>3</b>The plan: what to reply to, in what voice, and how it brings people to your product</li>
+            </ol>
+            <!-- TODO: point this to the Tally strategy-request form (handle, what you're building, team/personal, Telegram, monthly budget range) -->
+            <a href="https://x.com/shynxbt" target="_blank" rel="noopener" class="btn btn-ghost btn-block" data-strategy-request>Get your reply strategy <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <p class="path-note">Opens the X profile of @shynxbt, R3PLY’s founder. Tap Message and send your handle plus what you’re building.</p>
+          </div>
+        </div>
+
+        <!-- CALENDLY: existing 30-minute event and intake form -->
+        <div class="cal reveal" id="calendly">
+          <div class="cal-bar"><span>Free 30-minute X audit</span><a href="https://calendly.com/shynxbt/shynxbt-reply-guy" target="_blank" rel="noopener">Open in a new tab &nearr;</a></div>
           <div class="cal-shell" data-calendly>
             <p data-calendly-status role="status">Available times will appear here.</p>
           </div>
-          <p class="cal-fallback">Prefer a separate tab? <a href="https://calendly.com/shynxbt/shynxbt-reply-guy" target="_blank" rel="noopener">Open Calendly</a></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="sw sw-alt" id="faq" aria-labelledby="faq-title">
-    <div class="si">
-      <div class="s-intro">
-        <span class="eyebrow reveal">FAQ</span>
-        <h2 class="h-lg reveal" id="faq-title">Common <em class="accent">questions.</em></h2>
+  <section class="sec" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div class="faq-side">
+        <p class="kicker reveal">FAQ</p>
+        <h2 class="h2 reveal" id="faq-title">Common <span class="em">questions.</span></h2>
+        <p class="lead reveal" style="--d:.08s">Something else on your mind? Send a DM to <a class="link" href="https://x.com/shynxbt" target="_blank" rel="noopener">@shynxbt</a> on X.</p>
       </div>
-      <div class="faq-wrap">
-        <details class="faq-item reveal"><summary>How do I know it won't sound like AI or a bot?</summary><div class="faq-a">Because it isn't. Every reply is written by a human who has studied your posts, your takes, and how you actually talk. In the first week we send drafts for your review, so you can check the voice before anything runs on its own. If a reply ever feels off, we rewrite it, no questions asked.</div></details>
-        <details class="faq-item reveal"><summary>Is this safe for my account?</summary><div class="faq-a">Every reply is written and posted by a person, through X&rsquo;s own Delegate feature. No bots, no automation tools, no engagement pods. You keep full control of the account and can remove our access at any time.</div></details>
-        <details class="faq-item reveal"><summary>How does the Delegate feature work?</summary><div class="faq-a">X's native Delegate feature lets you authorize a trusted person to post on your account without sharing your password. Everything goes through X's official system, no third-party tools, no account risk. You keep full control and can revoke access any time.</div></details>
-        <details class="faq-item reveal"><summary>How many replies a day?</summary><div class="faq-a">It&rsquo;s scoped to your goals on the call. In the client reports above, the personal brand ran about 30 replies a day and Multipli&rsquo;s intern account about 50 a day.</div></details>
-        <details class="faq-item reveal"><summary>Can I see replies before they go live?</summary><div class="faq-a">Yes. We can set up a review workflow where you approve replies before they post. Once the voice is dialed in after week one, you can switch to hands-off. Your call, always.</div></details>
-        <details class="faq-item reveal"><summary>How do you capture my voice?</summary><div class="faq-a">We start with a 30-minute call to understand what you need. Then we study your posts, opinions, humour, phrasing, and how you respond to people to map your voice and tonality. From there, we build a voice profile your writer uses from day one, so the replies already sound exactly like you.</div></details>
-        <details class="faq-item reveal"><summary>Do you work with project accounts or only founders?</summary><div class="faq-a">Both. We run replies for project accounts, founder accounts, and branded intern accounts like Multipli&rsquo;s. Many teams start with one account and add the founder later.</div></details>
-        <details class="faq-item reveal"><summary>What accounts do you reply to?</summary><div class="faq-a">We identify the top 20-50 accounts your ideal audience follows, VCs, founders, analysts, KOLs in your niche. Every reply is strategically placed, not random. Quality of placement matters more than volume.</div></details>
-        <details class="faq-item reveal"><summary>How quickly will I see results?</summary><div class="faq-a">In client accounts so far, impressions and profile visits moved within the first one to three weeks; the reports above show the exact numbers. Inbound DMs and deals take longer and aren't guaranteed, so we report what moves every Sunday.</div></details>
-        <details class="faq-item reveal"><summary>What if I want to pause or cancel?</summary><div class="faq-a">No lock-in. Cancel anytime with 7 days notice. We don't believe in trapping clients, we believe in results that make you want to stay.</div></details>
+      <div class="faq-list reveal">
+        <details class="faq-item" name="faq"><summary>How do I know it won’t sound like AI or a bot?</summary><div class="faq-a">Because it isn’t. Every reply is written by a human who has studied your posts, your takes, and how you actually talk. In the first week we send drafts for your review, so you can check the voice before anything runs on its own. If a reply ever feels off, we rewrite it, no questions asked.</div></details>
+        <details class="faq-item" name="faq"><summary>Is this safe for my account?</summary><div class="faq-a">Every reply is written and posted by a person, through X’s own Delegate feature. No bots, no automation tools, no engagement pods. You keep full control of the account and can remove our access at any time.</div></details>
+        <details class="faq-item" name="faq"><summary>How does the Delegate feature work?</summary><div class="faq-a">X’s native Delegate feature lets you authorize a trusted person to post on your account without sharing your password. Everything goes through X’s official system, no third-party tools, no account risk. You keep full control and can revoke access any time.</div></details>
+        <details class="faq-item" name="faq"><summary>How many replies a day?</summary><div class="faq-a">It’s scoped to your goals on the call. In the client reports above, the personal brand ran about 30 replies a day and Multipli’s intern account about 50 a day.</div></details>
+        <details class="faq-item" name="faq"><summary>Can I see replies before they go live?</summary><div class="faq-a">Yes. We can set up a review workflow where you approve replies before they post. Once the voice is dialed in after week one, you can switch to hands-off. Your call, always.</div></details>
+        <details class="faq-item" name="faq"><summary>How do you capture my voice?</summary><div class="faq-a">We start with a 30-minute call to understand what you need. Then we study your posts, opinions, humour, phrasing, and how you respond to people to map your voice and tonality. From there, we build a voice profile your writer uses from day one, so the replies already sound exactly like you.</div></details>
+        <details class="faq-item" name="faq"><summary>Do you work with project accounts or only founders?</summary><div class="faq-a">Both. We run replies for project accounts, founder accounts, and branded intern accounts like Multipli’s. Many teams start with one account and add the founder later.</div></details>
+        <details class="faq-item" name="faq"><summary>What accounts do you reply to?</summary><div class="faq-a">We identify the top 20-50 accounts your ideal audience follows, VCs, founders, analysts, KOLs in your niche. Every reply is strategically placed, not random. Quality of placement matters more than volume.</div></details>
+        <details class="faq-item" name="faq"><summary>How quickly will I see results?</summary><div class="faq-a">In client accounts so far, impressions and profile visits moved within the first one to three weeks; the reports above show the exact numbers. Inbound DMs and deals take longer and aren’t guaranteed, so we report what moves every Sunday.</div></details>
+        <details class="faq-item" name="faq"><summary>What if I want to pause or cancel?</summary><div class="faq-a">No lock-in. Cancel anytime with 7 days notice. We don’t believe in trapping clients, we believe in results that make you want to stay.</div></details>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sw" style="position:relative;overflow:hidden;" aria-labelledby="final-title">
-    <div class="final-glow"></div>
-    <div class="si" style="text-align:center;position:relative;z-index:1;">
-      <span class="eyebrow reveal">Ready When You Are</span>
-      <h2 class="h-lg reveal" id="final-title" style="margin-bottom:20px;">Own your corner<br>of <em class="accent">CT.</em></h2>
-      <p class="s-body reveal" style="text-align:center;margin-left:auto;margin-right:auto;margin-bottom:40px;">The accounts that feel like they&rsquo;re everywhere are replying every day. We do that part for you, in your voice, and show you the numbers every Sunday.</p>
-      <a href="#calendly" data-book-call class="btn btn-blue btn-lg reveal magnetic">Book my free X audit</a>
+  <section class="final" aria-labelledby="final-title">
+    <div class="wrap">
+      <p class="kicker reveal">Ready when you are</p>
+      <h2 class="final-title reveal" id="final-title">Own your corner of <span class="hl">CT.</span></h2>
+      <p class="lead reveal" style="--d:.08s">The accounts that feel like they’re everywhere are replying every day. We do that part for you, in your voice, and show you the numbers every Sunday.</p>
+      <a href="#calendly" data-book-call class="btn btn-primary reveal" style="--d:.14s">Book my free X audit <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -1643,453 +1075,47 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div>
-      <div class="footer-logo">R<span>3</span>PLY</div>
-      <div class="footer-tagline">The CT presence layer for Web3 teams and founders.</div>
+    <div class="wrap footer-in">
+      <div>
+        <a href="#top" class="logo" aria-label="R3PLY, back to top">R<span>3</span>PLY</a>
+        <p class="footer-tag">The CT presence layer for Web3 teams and founders.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://x.com/shynxbt" target="_blank" rel="noopener">X / Twitter &nearr;</a>
+        <span>Are you a CT reply guy? <a href="reply-guys/">Apply to join the team &rarr;</a></span>
+        <span>© 2026 R3PLY. All rights reserved.</span>
+      </div>
     </div>
-    <div class="footer-right">
-      <a href="https://x.com/shynxbt" class="footer-link" target="_blank" rel="noopener">X / Twitter</a>
-      <div class="footer-copy">© 2026 R3PLY. All rights reserved.</div>
-      <div class="footer-writer-link">Are you a CT reply guy? <a href="reply-guys/">Apply to join the team →</a></div>
-    </div>
+    <div class="footer-mark" aria-hidden="true">R<span>3</span>PLY</div>
   </footer>
 
-  <div class="sticky-bar" id="sticky-bar" aria-hidden="true">
-    <p class="sticky-bar-text">Find the conversations your audience follows.</p>
-    <a href="#calendly" data-book-call class="btn btn-blue sticky-bar-btn">Book my free X audit</a>
+  <div class="sticky" id="sticky">
+    <a href="#calendly" data-book-call class="btn btn-primary btn-block">Book my free X audit <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
 
-  <script>
-    const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.documentElement.classList.add('js');
+  <!-- Screenshot viewer -->
+  <dialog class="lb" id="lightbox" aria-labelledby="lb-title">
+    <div class="lb-in">
+      <div class="lb-top">
+        <div>
+          <p class="lb-title" id="lb-title"></p>
+          <p class="lb-sub" id="lb-sub"></p>
+        </div>
+        <div class="lb-actions">
+          <span class="lb-count" id="lb-count" aria-live="polite"></span>
+          <a class="lb-btn" id="lb-open" href="#" target="_blank" rel="noopener" aria-label="Open the original image in a new tab"><span class="lb-open-txt">Open original</span><span aria-hidden="true">&nearr;</span></a>
+          <button type="button" class="lb-btn" data-lb-close aria-label="Close screenshot"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+        </div>
+      </div>
+      <div class="lb-stage" data-lb-stage>
+        <button type="button" class="lb-btn lb-nav prev" data-lb-prev aria-label="Previous screenshot"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+        <img id="lb-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+        <button type="button" class="lb-btn lb-nav next" data-lb-next aria-label="Next screenshot"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+      <p class="lb-stats" id="lb-stats"></p>
+    </div>
+  </dialog>
 
-    /* HERO CANVAS - blue cursor trails and dot-field click ripples */
-    (function() {
-      const canvas = document.getElementById('hero-canvas');
-      const hero = canvas && canvas.closest('.hero');
-      const ctx = canvas && canvas.getContext('2d');
-      if (!hero || !ctx) return;
-
-      const motion = matchMedia('(prefers-reduced-motion: reduce)');
-      const pointer = matchMedia('(hover: hover) and (pointer: fine)');
-      const rgb = getComputedStyle(hero).getPropertyValue('--accent-rgb').trim().split(/[\s,]+/).map(Number);
-      const blue = rgb.length === 3 && rgb.every(Number.isFinite) ? rgb : [79, 158, 255];
-      const TRAIL_LIFE = 680, RIPPLE_LIFE = 1700, MAX_TRAIL = 24;
-      let width = 1, height = 1, radius = 100, dots = [], masks = [];
-      let trail = [], ripples = [], frame = null, inView = true, lastPaint = 0;
-      let phase = 0, previousTime = 0, previousPoint = null;
-      const animated = () => !motion.matches && pointer.matches;
-      const canRun = () => animated() && inView && !document.hidden;
-
-      function measure() {
-        const rect = canvas.getBoundingClientRect();
-        width = Math.max(1, rect.width);
-        height = Math.max(1, rect.height);
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        radius = Math.max(80, Math.min(120, width * 0.075));
-        masks = [...hero.querySelectorAll('.hero-call-note, .hero-trust')].map(el => {
-          const r = el.getBoundingClientRect();
-          return { left: r.left - rect.left - 10, top: r.top - rect.top - 10,
-            right: r.right - rect.left + 10, bottom: r.bottom - rect.top + 10 };
-        });
-        const spacing = width < 600 ? 22 : 16;
-        dots = [];
-        for (let y = spacing / 2; y < height; y += spacing) {
-          for (let x = spacing / 2; x < width; x += spacing) {
-            if (masks.some(m => x >= m.left && x <= m.right && y >= m.top && y <= m.bottom)) continue;
-            const edge = Math.min(1, Math.min(x, width - x) / 90);
-            dots.push({ x, y, edge, distance: Math.hypot(x - width * 0.5, y - height * 0.35) });
-          }
-        }
-        trail = [];
-        ripples = [];
-        previousPoint = null;
-        paint(performance.now(), false);
-        sync();
-      }
-
-      function paint(now, moving) {
-        if (moving) phase += Math.min(50, now - (previousTime || now)) / 1000;
-        previousTime = now;
-        trail = trail.filter(p => now - p.time < TRAIL_LIFE);
-        ripples = ripples.filter(p => now - p.time < RIPPLE_LIFE);
-        const strokes = trail.map(p => ({ ...p, fade: Math.pow(1 - (now - p.time) / TRAIL_LIFE, 1.5),
-          dx: p.x - p.fromX, dy: p.y - p.fromY,
-          length: Math.pow(p.x - p.fromX, 2) + Math.pow(p.y - p.fromY, 2) }));
-        const waves = ripples.map(p => ({ ...p, radius: (now - p.time) * 0.62,
-          fade: Math.pow(1 - (now - p.time) / RIPPLE_LIFE, 2) }));
-        ctx.clearRect(0, 0, width, height);
-        for (const dot of dots) {
-          let wake = 0, ripple = 0;
-          if (moving) {
-            for (const p of strokes) {
-              if (Math.abs(dot.x - p.x) > radius + Math.abs(p.dx) || Math.abs(dot.y - p.y) > radius + Math.abs(p.dy)) continue;
-              const t = p.length ? Math.max(0, Math.min(1, ((dot.x - p.fromX) * p.dx + (dot.y - p.fromY) * p.dy) / p.length)) : 0;
-              const distance = Math.hypot(dot.x - p.fromX - p.dx * t, dot.y - p.fromY - p.dy * t);
-              if (distance < radius) wake = Math.max(wake, Math.pow(1 - distance / radius, 2) * p.fade);
-            }
-            for (const p of waves) {
-              const distance = Math.abs(Math.hypot(dot.x - p.x, dot.y - p.y) - p.radius);
-              const thickness = 24 + p.radius * 0.045;
-              if (distance < thickness) ripple = Math.max(ripple, (1 - distance / thickness) * p.fade);
-            }
-          }
-          const light = Math.min(1, Math.max(wake, ripple));
-          const breath = moving ? (Math.sin(phase * 1.25 - dot.distance * 0.012) + 1) * 0.016 : 0.013;
-          const alpha = (0.034 + breath + light * 0.66) * dot.edge;
-          const blend = Math.min(1, light * 1.7);
-          const color = blue.map((channel, i) => Math.round([242, 243, 248][i] * (1 - blend) + channel * blend));
-          ctx.fillStyle = `rgba(${color.join(',')},${alpha})`;
-          ctx.beginPath();
-          ctx.arc(dot.x, dot.y, 0.85 + light * 1.15, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      function tick(now) {
-        frame = null;
-        if (!canRun()) return;
-        // Limit the background to 40 fps; page controls keep their normal frame rate.
-        if (now - lastPaint >= 25) { paint(now, true); lastPaint = now; }
-        frame = requestAnimationFrame(tick);
-      }
-      function stop() {
-        if (frame !== null) cancelAnimationFrame(frame);
-        frame = null;
-        previousTime = 0;
-      }
-      function sync() {
-        if (canRun()) {
-          if (frame === null) frame = requestAnimationFrame(tick);
-        } else {
-          stop();
-          if (!animated()) {
-            trail = []; ripples = []; previousPoint = null;
-            paint(performance.now(), false);
-          }
-        }
-      }
-      function localPoint(e) {
-        const rect = canvas.getBoundingClientRect();
-        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-      }
-      hero.addEventListener('pointermove', e => {
-        if (!canRun() || e.pointerType === 'touch') return;
-        const now = performance.now();
-        if (previousPoint && now - previousPoint.time < 12) return;
-        const p = localPoint(e);
-        if (p.x < 0 || p.y < 0 || p.x > width || p.y > height) return;
-        const nearby = previousPoint && now - previousPoint.time < 100 &&
-          Math.hypot(p.x - previousPoint.x, p.y - previousPoint.y) < radius * 2;
-        trail.push({ ...p, fromX: nearby ? previousPoint.x : p.x,
-          fromY: nearby ? previousPoint.y : p.y, time: now });
-        if (trail.length > MAX_TRAIL) trail.shift();
-        previousPoint = { ...p, time: now };
-      }, { passive: true });
-      hero.addEventListener('pointerleave', () => { previousPoint = null; });
-      hero.addEventListener('click', e => {
-        if (!canRun() || e.target.closest('a, button, input, select, textarea, summary')) return;
-        ripples.push({ ...localPoint(e), time: performance.now() });
-        if (ripples.length > 4) ripples.shift();
-      });
-
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(entries => {
-          inView = entries.some(entry => entry.isIntersecting);
-          if (!inView) { trail = []; ripples = []; previousPoint = null; }
-          sync();
-        }, { threshold: 0 }).observe(hero);
-      }
-      if ('ResizeObserver' in window) new ResizeObserver(measure).observe(hero);
-      else window.addEventListener('resize', measure, { passive: true });
-      document.addEventListener('visibilitychange', sync);
-      motion.addEventListener('change', sync);
-      pointer.addEventListener('change', sync);
-      window.addEventListener('pageshow', measure);
-      if (document.fonts) document.fonts.ready.then(measure);
-      measure();
-    })();
-
-
-    /* SCROLL REVEAL */
-    if (!REDUCE) {
-      const revealObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-    } else {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-    }
-
-    /* NAVBAR scroll state + active link */
-    const nav = document.querySelector('.nav');
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
-
-    /* STICKY BOTTOM CTA */
-    const stickyBar = document.getElementById('sticky-bar');
-    const stickyFooter = document.querySelector('footer');
-    if (stickyBar) {
-      window.addEventListener('scroll', () => {
-        const footerTop = stickyFooter ? stickyFooter.getBoundingClientRect().top : Infinity;
-        const show = window.scrollY > 700 && footerTop > window.innerHeight * 0.85;
-        stickyBar.classList.toggle('visible', show);
-        stickyBar.setAttribute('aria-hidden', show ? 'false' : 'true');
-      }, { passive: true });
-    }
-
-    /* MOBILE MENU TOGGLE */
-    const burger = document.getElementById('nav-burger');
-    const mobileMenu = document.getElementById('nav-mobile-menu');
-    if (burger && mobileMenu) {
-      burger.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.toggle('open');
-        burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('open');
-          burger.setAttribute('aria-expanded', 'false');
-        });
-      });
-    }
-
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-    const activeObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const found = [...navLinks].find(l => l.getAttribute('href') === '#' + e.target.id);
-          if (found) { navLinks.forEach(l => l.classList.remove('active')); found.classList.add('active'); }
-        }
-      });
-    }, { threshold: 0.4 });
-    ['proof','process','pricing','faq'].forEach(id => { const s = document.getElementById(id); if (s) activeObs.observe(s); });
-
-    /* MAGNETIC BUTTONS */
-    if (!REDUCE && matchMedia('(pointer: fine)').matches) {
-      document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('pointermove', e => {
-          const r = btn.getBoundingClientRect();
-          const relX = (e.clientX - r.left - r.width / 2) * 0.25;
-          const relY = (e.clientY - r.top - r.height / 2) * 0.35;
-          btn.style.transform = `translate(${relX}px, ${relY - 2}px)`;
-        });
-        btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
-      });
-    }
-
-    /* CURSOR SPOTLIGHT + SUBTLE TILT */
-    if (!REDUCE && matchMedia('(pointer: fine)').matches) {
-      document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.addEventListener('pointermove', e => {
-          const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-          card.style.setProperty('--mx', px * 100 + '%');
-          card.style.setProperty('--my', py * 100 + '%');
-          card.style.transform = `perspective(900px) rotateX(${(0.5 - py) * 5}deg) rotateY(${(px - 0.5) * 6}deg) translateY(-4px)`;
-        });
-        card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-      });
-    }
-
-    /* ONE BOOKING JOURNEY: initialize on CTA click or when the calendar approaches. */
-    (function() {
-      const shell = document.querySelector('[data-calendly]');
-      if (!shell) return;
-      let observer;
-      function loadCalendar() {
-        if (shell.dataset.loaded) return;
-        shell.dataset.loaded = '1';
-        const status = shell.querySelector('[data-calendly-status]');
-        if (status) status.textContent = 'Loading available times…';
-        shell.setAttribute('aria-busy', 'true');
-        const frame = document.createElement('iframe');
-        frame.className = 'cal-widget';
-        frame.title = 'Book a R3PLY 30-minute X audit';
-        frame.src = 'https://calendly.com/shynxbt/shynxbt-reply-guy';
-        frame.addEventListener('load', () => {
-          shell.setAttribute('aria-busy', 'false');
-          if (status) status.hidden = true;
-        }, { once: true });
-        shell.appendChild(frame);
-        if (observer) observer.disconnect();
-      }
-      document.querySelectorAll('[data-book-call]').forEach(link => {
-        link.addEventListener('click', loadCalendar);
-      });
-      if ('IntersectionObserver' in window) {
-        observer = new IntersectionObserver(entries => {
-          if (entries.some(entry => entry.isIntersecting)) loadCalendar();
-        }, { rootMargin: '400px 0px' });
-        observer.observe(shell);
-      } else {
-        loadCalendar();
-      }
-    })();
-
-    /* PROOF OF WORK - focus gallery + lightbox */
-    (function() {
-      const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
-
-      /* Desktop focus gallery: mouseenter/leave toggles focused/dimmed on siblings */
-      function bindFocusGallery() {
-        document.querySelectorAll('[data-proof-row]').forEach(row => {
-          const shots = [...row.querySelectorAll('.proof-shot')];
-          shots.forEach(shot => {
-            shot.addEventListener('mouseenter', () => {
-              if (!finePointer.matches) return;
-              shot.classList.add('focused');
-              shots.forEach(sib => { if (sib !== shot) sib.classList.add('dimmed'); });
-            });
-            shot.addEventListener('mouseleave', () => {
-              shot.classList.remove('focused');
-              shots.forEach(sib => sib.classList.remove('dimmed'));
-            });
-          });
-        });
-      }
-      bindFocusGallery();
-
-      /* Lightbox */
-      const lb = document.getElementById('proof-lightbox');
-      if (!lb) return;
-      const lbImg = document.getElementById('proof-lb-img');
-      const lbClient = document.getElementById('proof-lb-client');
-      const lbRange = document.getElementById('proof-lb-range');
-      const lbStats = document.getElementById('proof-lb-stats');
-      const btnPrev = lb.querySelector('[data-proof-lb-prev]');
-      const btnNext = lb.querySelector('[data-proof-lb-next]');
-      const closeEls = lb.querySelectorAll('[data-proof-lb-close]');
-      const shots = [...document.querySelectorAll('.proof-shot')];
-      let activeShot = null;
-      let groupShots = [];
-      let groupIndex = 0;
-      let lastFocus = null;
-
-      function focusables() {
-        return [...lb.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
-          .filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null && (el.classList.contains('is-visible') || !el.classList.contains('proof-lb-nav') || getComputedStyle(el).display !== 'none'));
-      }
-
-      function getFocusableInLb() {
-        const list = [];
-        const closeBtn = lb.querySelector('.proof-lb-close');
-        if (closeBtn) list.push(closeBtn);
-        if (btnPrev && btnPrev.classList.contains('is-visible')) list.push(btnPrev);
-        if (btnNext && btnNext.classList.contains('is-visible')) list.push(btnNext);
-        return list;
-      }
-
-      function fillFromShot(shot) {
-        const img = shot.querySelector('img');
-        lbImg.src = img ? img.currentSrc || img.src : '';
-        lbImg.alt = img ? img.alt : '';
-        lbClient.textContent = shot.dataset.client || '';
-        lbRange.textContent = shot.dataset.range || '';
-        lbStats.textContent = shot.dataset.stats || '';
-      }
-
-      function updateNav() {
-        const multi = groupShots.length > 1;
-        btnPrev.classList.toggle('is-visible', multi);
-        btnNext.classList.toggle('is-visible', multi);
-      }
-
-      function openLightbox(shot) {
-        activeShot = shot;
-        lastFocus = document.activeElement;
-        const group = shot.dataset.group;
-        groupShots = group ? shots.filter(s => s.dataset.group === group) : [shot];
-        groupIndex = Math.max(0, groupShots.indexOf(shot));
-        fillFromShot(shot);
-        updateNav();
-        lb.hidden = false;
-        requestAnimationFrame(() => lb.classList.add('is-open'));
-        document.body.classList.add('proof-lb-open');
-        const closeBtn = lb.querySelector('.proof-lb-close');
-        if (closeBtn) closeBtn.focus();
-      }
-
-      function closeLightbox() {
-        lb.classList.remove('is-open');
-        document.body.classList.remove('proof-lb-open');
-        const restore = lastFocus;
-        lastFocus = null;
-        activeShot = null;
-        setTimeout(() => {
-          if (!lb.classList.contains('is-open')) {
-            lb.hidden = true;
-            lbImg.removeAttribute('src');
-          }
-        }, 250);
-        if (restore && typeof restore.focus === 'function') restore.focus();
-      }
-
-      function showGroupAt(i) {
-        if (!groupShots.length) return;
-        groupIndex = (i + groupShots.length) % groupShots.length;
-        activeShot = groupShots[groupIndex];
-        fillFromShot(activeShot);
-      }
-
-      shots.forEach(shot => {
-        shot.addEventListener('click', () => openLightbox(shot));
-      });
-
-      closeEls.forEach(el => {
-        el.addEventListener('click', e => {
-          e.preventDefault();
-          closeLightbox();
-        });
-      });
-
-      btnPrev.addEventListener('click', e => {
-        e.stopPropagation();
-        showGroupAt(groupIndex - 1);
-      });
-      btnNext.addEventListener('click', e => {
-        e.stopPropagation();
-        showGroupAt(groupIndex + 1);
-      });
-
-      document.addEventListener('keydown', e => {
-        if (!lb.classList.contains('is-open')) return;
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeLightbox();
-          return;
-        }
-        if (e.key === 'ArrowLeft' && groupShots.length > 1) {
-          e.preventDefault();
-          showGroupAt(groupIndex - 1);
-          return;
-        }
-        if (e.key === 'ArrowRight' && groupShots.length > 1) {
-          e.preventDefault();
-          showGroupAt(groupIndex + 1);
-          return;
-        }
-        if (e.key === 'Tab') {
-          const list = getFocusableInLb();
-          if (!list.length) { e.preventDefault(); return; }
-          const first = list[0];
-          const last = list[list.length - 1];
-          if (e.shiftKey) {
-            if (document.activeElement === first || !lb.contains(document.activeElement)) {
-              e.preventDefault();
-              last.focus();
-            }
-          } else {
-            if (document.activeElement === last || !lb.contains(document.activeElement)) {
-              e.preventDefault();
-              first.focus();
-            }
-          }
-        }
-      });
-    })();
-  </script>
+  <script src="assets/site.js?v=2.0" defer></script>
 </body>
 </html>
